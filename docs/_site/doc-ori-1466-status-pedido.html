@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sincronização de status de pedido vinda do ERP · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Specs</a><span class="sep">/</span>ORI-1466-status-pedido.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-spec)">Spec</span>
+    <a href="card-ori-1466.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1466</span></a>
+    <span class="st ok">aprovada</span>
+  </div>
+  <h1>Sincronização de status de pedido vinda do ERP</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-07-08</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Revisado por</span>
+      <span class="meta-v">Coordenação técnica</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">2 saídas · 2 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#contexto">Contexto</a></li><li><a href="#comportamento-esperado">Comportamento esperado</a></li><li><a href="#estados-aceitos">Estados aceitos</a></li><li><a href="#criterios-de-aceite">Critérios de aceite</a></li><li><a href="#fora-de-escopo">Fora de escopo</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">spec</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Sincronização de status de pedido vinda do ERP</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1466</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">aprovada</span>
+<span class="k">reviewer</span><span class="d">:</span> <span class="v">Coordenação técnica</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">integracao</span>
+  <span class="d">-</span> <span class="v">pedido</span>
+  <span class="d">-</span> <span class="v">platform-events</span>
+<span class="k">related</span><span class="d">:</span>
+  <span class="d">-</span> <span class="l">ORI-1466-eventos-pedido</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-07-08</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="contexto">Contexto</h2>
+<p>O status real do pedido vive no ERP e não chega ao time comercial sem intervenção manual. A dor está detalhada em <a class="wl" href="doc-ori-1466-entendimento.html" style="--c:var(--t-entend)">Status de pedido do ERP visível dentro do Salesforce</a>.</p>
+<h2 id="comportamento-esperado">Comportamento esperado</h2>
+<p>O ERP publica um evento a cada mudança de status. O Salesforce consome esse evento e atualiza o pedido correspondente. Nenhuma tela precisa ser aberta e nenhum usuário precisa agir.</p>
+<p>Quando o evento chega para um pedido que o Salesforce não conhece, ele é registrado como pendência em vez de ser descartado — o pedido pode ter sido criado direto no ERP.</p>
+<h2 id="estados-aceitos">Estados aceitos</h2>
+<div class="tablewrap"><table><thead><tr><th>Status no ERP</th><th>Status no Salesforce</th><th>Encerra o pedido?</th></tr></thead><tbody><tr><td><code>AGUARDANDO_SEPARACAO</code></td><td>Aguardando separação</td><td>Não</td></tr><tr><td><code>EM_SEPARACAO</code></td><td>Em separação</td><td>Não</td></tr><tr><td><code>FATURADO</code></td><td>Faturado</td><td>Não</td></tr><tr><td><code>EXPEDIDO</code></td><td>Expedido</td><td>Não</td></tr><tr><td><code>ENTREGUE</code></td><td>Entregue</td><td>Sim</td></tr><tr><td><code>CANCELADO</code></td><td>Cancelado</td><td>Sim</td></tr></tbody></table></div>
+<p>Status fora desta lista é ignorado e registrado no log. A lista cresce por mudança de spec, nunca por inferência em tempo de execução.</p>
+<h2 id="criterios-de-aceite">Critérios de aceite</h2>
+<ul><li>Mudança de status no ERP reflete no Salesforce em até 5 minutos.</li><li>Evento repetido para o mesmo status não gera nova atualização nem novo log.</li><li>Evento fora de ordem, com data anterior ao status atual, é descartado.</li><li>Evento para pedido desconhecido vira pendência, não erro silencioso.</li><li>Durante a janela de manutenção do ERP, os eventos acumulam e são processados ao final, sem perda.</li></ul>
+<h2 id="fora-de-escopo">Fora de escopo</h2>
+<p>O caminho inverso — Salesforce publicando para o ERP — não faz parte deste card. O ERP continua sendo a fonte da verdade sobre o pedido.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 2 entradas</h4>
+  <a class="backlink" href="doc-ori-1466-eventos-pedido.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-arq)">Arquitetura</span></span>
+  <span class="bn">Platform Events como canal de status do ERP</span>
+  <code class="bp">arquitetura/ORI-1466-eventos-pedido.md</code>
+</a><a class="backlink" href="doc-ori-1466-entrega.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-entrega)">Entrega</span></span>
+  <span class="bn">Status de pedido sincronizado a partir do ERP</span>
+  <code class="bp">entregas/ORI-1466-entrega.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 2 saídas</h4>
+  <ul><li><span class="tick" style="color:var(--t-entend)">&#9656;</span><a href="doc-ori-1466-entendimento.html">Status de pedido do ERP visível dentro do Salesforce</a></li><li><span class="tick" style="color:var(--t-arq)">&#9656;</span><a href="doc-ori-1466-eventos-pedido.html">Platform Events como canal de status do ERP</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">integracao</span><span class="st plain">pedido</span><span class="st plain">platform-events</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

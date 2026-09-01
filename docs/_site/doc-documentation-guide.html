@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Padrão de documentação do projeto · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Regras de negócio</a><span class="sep">/</span>DOCUMENTATION-GUIDE.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-regra)">Regra de negócio</span>
+    
+    <span class="st ok">vigente</span>
+  </div>
+  <h1>Padrão de documentação do projeto</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-08-24</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">0 saídas · 0 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#a-regra-de-ouro">A regra de ouro</a></li><li><a href="#campos-obrigatorios-em-todo-documento">Campos obrigatórios em todo documento</a></li><li><a href="#os-seis-tipos">Os seis tipos</a></li><li><a href="#campos-opcionais-uteis">Campos opcionais úteis</a></li><li><a href="#como-ligar-documentos">Como ligar documentos</a></li><li><a href="#nome-de-arquivo">Nome de arquivo</a></li><li><a href="#escrevendo-o-corpo">Escrevendo o corpo</a></li><li><a href="#o-que-nao-fazer">O que não fazer</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">regra</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Padrão de documentação do projeto</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">vigente</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">meta</span>
+  <span class="d">-</span> <span class="v">padrao</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-08-24</span>
+<span class="d">---</span></div>
+    <div class="prose"><p>Este documento é a instrução para quem escreve documentação aqui — pessoa ou IA. Ele é lido pelo Doczilla, que transforma esta pasta numa wiki navegável.</p>
+<p><strong>Se você é um assistente de IA trabalhando neste repositório: leia este arquivo antes de criar qualquer documento em <code>docs/</code>, e siga o padrão exatamente.</strong> Um documento fora do padrão não quebra o build, mas fica solto na wiki e aparece na lista de avisos.</p>
+<h2 id="a-regra-de-ouro">A regra de ouro</h2>
+<p>Todo arquivo <code>.md</code> dentro de <code>docs/</code> começa com um bloco de frontmatter. É esse bloco — e não a pasta onde o arquivo está — que define o que o documento é.</p>
+<pre class="codebox" data-lang="markdown"><code>---
+type: spec
+title: Alçada de aprovação por faixa de desconto
+card: ABC-1487
+status: aprovada
+tags: [opportunity, aprovacao]
+related:
+  - alcada-comercial
+updated: 2026-08-19
+---</code></pre>
+<h2 id="campos-obrigatorios-em-todo-documento">Campos obrigatórios em todo documento</h2>
+<div class="tablewrap"><table><thead><tr><th>Campo</th><th>O que é</th><th>Exemplo</th></tr></thead><tbody><tr><td><code>type</code></td><td>Um dos seis tipos abaixo. Sem inventar novos.</td><td><code>spec</code></td></tr><tr><td><code>title</code></td><td>Título em linguagem de gente, não o nome do arquivo.</td><td><code>Alçada de aprovação por faixa de desconto</code></td></tr><tr><td><code>status</code></td><td>Onde o documento está. Vocabulário livre.</td><td><code>aprovada</code>, <code>em análise</code>, <code>resolvido</code></td></tr><tr><td><code>updated</code></td><td>Data da última alteração, em <code>AAAA-MM-DD</code>.</td><td><code>2026-08-19</code></td></tr></tbody></table></div>
+<h2 id="os-seis-tipos">Os seis tipos</h2>
+<h3 id="entendimento-docs-cards"><code>entendimento</code> → <code>docs/cards/</code></h3>
+<p>O que o card pede, na linguagem do negócio. Escrito <strong>antes</strong> de qualquer linha de código. Se você não consegue escrever isto, você ainda não entendeu o card.</p>
+<ul><li>Obrigatório além dos comuns: <code>card</code></li><li>Responde: qual é a dor hoje, o que o usuário espera, como saberemos que resolveu</li></ul>
+<h3 id="spec-docs-specs"><code>spec</code> → <code>docs/specs/</code></h3>
+<p>O contrato do que será entregue: comportamento esperado, critérios de aceite e casos de borda. É o documento mais consultado depois que o card fecha.</p>
+<ul><li>Obrigatório além dos comuns: <code>card</code></li><li>Responde: o que exatamente o sistema faz, em que condições, e o que não faz</li></ul>
+<h3 id="arquitetura-docs-arquitetura"><code>arquitetura</code> → <code>docs/arquitetura/</code></h3>
+<p>A decisão técnica <strong>e o porquê dela</strong> — incluindo o que foi descartado. Sem o &quot;porquê&quot;, o documento envelhece mal e ninguém sabe se pode mudar.</p>
+<ul><li>Obrigatório além dos comuns: <code>card</code>, <code>components</code></li><li>Responde: qual caminho foi escolhido, quais foram descartados e por quê</li></ul>
+<h3 id="bug-docs-bugs"><code>bug</code> → <code>docs/bugs/</code></h3>
+<p>Sintoma, causa raiz e correção. <strong>Fica no ar mesmo depois de resolvido</strong>: é memória do time, não um ticket.</p>
+<ul><li>Obrigatório além dos comuns: <code>card</code>, <code>severity</code></li><li>Responde: o que o usuário viu, por que acontecia de verdade, o que mudou</li></ul>
+<h3 id="entrega-docs-entregas"><code>entrega</code> → <code>docs/entregas/</code></h3>
+<p>O que foi de fato desenvolvido, onde, e como validar. Escrito no fim, com o que realmente foi para o ar — não com o que estava planejado.</p>
+<ul><li>Obrigatório além dos comuns: <code>card</code>, <code>components</code>, <code>deployed</code></li><li>Responde: quais componentes mudaram, como validar em produção, como reverter</li></ul>
+<h3 id="regra-docs-regras"><code>regra</code> → <code>docs/regras/</code></h3>
+<p>Regra de negócio que atravessa vários cards. <strong>Não tem <code>card</code></strong> — é referenciada por eles. Se a regra pertence a um card só, ela provavelmente é uma spec.</p>
+<ul><li>Nenhum campo obrigatório além dos comuns</li><li>Responde: qual é a regra, desde quando vale, quem pode mudá-la</li></ul>
+<h2 id="campos-opcionais-uteis">Campos opcionais úteis</h2>
+<div class="tablewrap"><table><thead><tr><th>Campo</th><th>Onde se aplica</th><th>Formato</th></tr></thead><tbody><tr><td><code>tags</code></td><td>qualquer</td><td>lista: <code>[opportunity, integracao]</code></td></tr><tr><td><code>related</code></td><td>qualquer</td><td>lista de ids de outros documentos</td></tr><tr><td><code>components</code></td><td>arquitetura, entrega, bug</td><td>lista de componentes tocados</td></tr><tr><td><code>severity</code></td><td>bug</td><td><code>baixa</code>, <code>media</code>, <code>alta</code>, <code>critica</code></td></tr><tr><td><code>deployed</code></td><td>entrega</td><td>data em <code>AAAA-MM-DD</code></td></tr><tr><td><code>sprint</code></td><td>entendimento</td><td>texto livre</td></tr><tr><td><code>reviewer</code></td><td>spec</td><td>quem revisou</td></tr><tr><td><code>rollback</code></td><td>entrega</td><td>como reverter, em uma linha</td></tr></tbody></table></div>
+<h2 id="como-ligar-documentos">Como ligar documentos</h2>
+<p>Existem dois mecanismos, e eles servem a propósitos diferentes.</p>
+<p><strong>1. Pelo card — automático.</strong> Todo documento que declara o mesmo <code>card</code> aparece junto na página daquele card, em ordem: entendimento, spec, arquitetura, bug, entrega. Você não escreve link nenhum para isso acontecer.</p>
+<p><strong>2. Por wikilink — manual.</strong> Dentro do texto, <code>[[nome-do-arquivo]]</code> cria uma ligação para outro documento. O nome é o do arquivo <strong>sem a extensão <code>.md</code></strong>.</p>
+<pre class="codebox" data-lang="markdown"><code>As faixas seguem a regra descrita em [[alcada-comercial]].
+Para trocar o rótulo: [[alcada-comercial|a regra de alçada]].</code></pre>
+<p>O documento apontado ganha automaticamente um <strong>backlink</strong> de volta. Wikilink que não resolve vira aviso no build — o nome precisa bater com um arquivo real.</p>
+<h2 id="nome-de-arquivo">Nome de arquivo</h2>
+<ul><li>Documento ligado a um card: <code>&lt;CARD&gt;-&lt;assunto-curto&gt;.md</code> — ex.: <code>ABC-1487-aprovacao-desconto.md</code></li><li>Regra de negócio: <code>&lt;assunto&gt;.md</code> — ex.: <code>alcada-comercial.md</code></li><li>Sempre minúsculas, sem acento, separado por hífen. É esse nome que vai dentro de <code>[[...]]</code>.</li></ul>
+<h2 id="escrevendo-o-corpo">Escrevendo o corpo</h2>
+<ul><li>Comece por <code>##</code>. O <code>title</code> do frontmatter já é o <code>&lt;h1&gt;</code> da página.</li><li>Um assunto por seção. Seções viram o sumário lateral automaticamente.</li><li>Prefira tabela a lista quando houver mais de dois eixos de informação.</li><li>Blocos de código levam a linguagem: ``<code>apex, </code>`<code>sql, </code>``json.</li><li>Escreva o que é verdade hoje. Documento não é diário de bordo.</li></ul>
+<h2 id="o-que-nao-fazer">O que não fazer</h2>
+<ul><li>Não inventar <code>type</code> novo — o build rejeita e o documento fica órfão.</li><li>Não pôr <code>card</code> em documento do tipo <code>regra</code>.</li><li>Não escrever <code>[[link]]</code> para arquivo que ainda não existe.</li><li>Não copiar dados reais de cliente, credencial, endpoint de produção ou nome de pessoa física para dentro de exemplo. Exemplo é sempre dado fictício.</li></ul></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks</h4>
+  <p style="margin:0; font-size:14px; color:var(--text-mute)">Nenhum documento aponta para este ainda.</p>
+</div>
+    
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">meta</span><span class="st plain">padrao</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

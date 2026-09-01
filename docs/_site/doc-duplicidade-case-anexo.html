@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chamado duplicado em resposta de e-mail com anexo · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Investigações de bug</a><span class="sep">/</span>duplicidade-case-anexo.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-bug)">Investigação de bug</span>
+    
+    <span class="st warn">em análise</span>
+  </div>
+  <h1>Chamado duplicado em resposta de e-mail com anexo</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-08-21</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Severidade</span>
+      <span class="meta-v">media</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">1 saída · 1 entrada</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#sintoma">Sintoma</a></li><li><a href="#o-que-ja-foi-verificado">O que já foi verificado</a></li><li><a href="#hipotese-atual">Hipótese atual</a></li><li><a href="#proximo-passo">Próximo passo</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">bug</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Chamado duplicado em resposta de e-mail com anexo</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">em análise</span>
+<span class="k">severity</span><span class="d">:</span> <span class="v">media</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">case</span>
+  <span class="d">-</span> <span class="v">roteamento</span>
+  <span class="d">-</span> <span class="v">email-to-case</span>
+<span class="k">components</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">Case</span>
+  <span class="d">-</span> <span class="v">Flow_RoteamentoCase</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-08-21</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="sintoma">Sintoma</h2>
+<p>Resposta de cliente a um e-mail de chamado, quando vem com arquivo anexado, gera dois registros de chamado em vez de um. Sem anexo, gera apenas um.</p>
+<p>Os dois registros nascem com poucos segundos de diferença, mesmo remetente e mesmo assunto. O anexo fica em apenas um deles.</p>
+<h2 id="o-que-ja-foi-verificado">O que já foi verificado</h2>
+<ul><li>Não é duplicidade de envio do cliente: o servidor de e-mail registra uma única mensagem recebida.</li><li>Não acontece com anexo de qualquer tamanho — as ocorrências observadas até agora envolvem arquivos acima de 3 MB.</li><li>A automação de roteamento roda duas vezes nos casos duplicados, segundo o log, mas ainda não sabemos o que a dispara na segunda vez.</li></ul>
+<h2 id="hipotese-atual">Hipótese atual</h2>
+<p>A mensagem com anexo grande parece ser processada em duas etapas — corpo primeiro, anexo depois — e a segunda etapa estaria sendo tratada como uma nova mensagem. Ainda <strong>não confirmado</strong>: falta reproduzir em ambiente controlado com anexo grande.</p>
+<h2 id="proximo-passo">Próximo passo</h2>
+<p>Reproduzir com arquivo de 5 MB em sandbox e capturar o log completo das duas execuções. Enquanto a causa não estiver confirmada, não faz sentido escrever a spec da correção — o levantamento do card está em <a class="wl" href="doc-ori-1502-entendimento.html" style="--c:var(--t-entend)">Chamados duplicados quando o cliente responde com anexo</a>.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 1 entrada</h4>
+  <a class="backlink" href="doc-ori-1502-entendimento.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-entend)">Entendimento</span></span>
+  <span class="bn">Chamados duplicados quando o cliente responde com anexo</span>
+  <code class="bp">cards/ORI-1502-entendimento.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 1 saída</h4>
+  <ul><li><span class="tick" style="color:var(--t-entend)">&#9656;</span><a href="doc-ori-1502-entendimento.html">Chamados duplicados quando o cliente responde com anexo</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">case</span><span class="st plain">roteamento</span><span class="st plain">email-to-case</span></div><h4 style="margin-top:20px">Componentes</h4><ul><li><span class="tick">&#9656;</span><code>Case</code></li><li><span class="tick">&#9656;</span><code>Flow_RoteamentoCase</code></li></ul></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

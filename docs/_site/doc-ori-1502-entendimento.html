@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chamados duplicados quando o cliente responde com anexo · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Entendimentos</a><span class="sep">/</span>ORI-1502-entendimento.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-entend)">Entendimento</span>
+    <a href="card-ori-1502.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1502</span></a>
+    <span class="st warn">em análise</span>
+  </div>
+  <h1>Chamados duplicados quando o cliente responde com anexo</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-08-14</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">1 saída · 1 entrada</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#qual-e-a-dor-hoje">Qual é a dor hoje</a></li><li><a href="#o-que-se-espera">O que se espera</a></li><li><a href="#como-saberemos-que-resolveu">Como saberemos que resolveu</a></li><li><a href="#o-que-ainda-nao-sabemos">O que ainda não sabemos</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">entendimento</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Chamados duplicados quando o cliente responde com anexo</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1502</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">em análise</span>
+<span class="k">sprint</span><span class="d">:</span> <span class="v">Sprint 35</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">case</span>
+  <span class="d">-</span> <span class="v">roteamento</span>
+  <span class="d">-</span> <span class="v">email-to-case</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-08-14</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="qual-e-a-dor-hoje">Qual é a dor hoje</h2>
+<p>O time de atendimento relata que alguns chamados aparecem duplicados na fila: dois registros, mesmo assunto, mesmo cliente, criados com poucos segundos de diferença.</p>
+<p>O padrão que o time percebeu é que acontece quando o cliente responde ao e-mail do chamado <strong>com um arquivo anexado</strong>. Resposta sem anexo não duplica.</p>
+<p>O impacto é dois atendentes trabalharem no mesmo caso sem saber, e o indicador de volume de chamados ficar inflado.</p>
+<h2 id="o-que-se-espera">O que se espera</h2>
+<p>Um chamado por solicitação do cliente, com o anexo preservado, independente de como a resposta chega.</p>
+<h2 id="como-saberemos-que-resolveu">Como saberemos que resolveu</h2>
+<ul><li>Resposta com anexo gera exatamente um registro.</li><li>O anexo continua acessível a partir do chamado.</li><li>O volume de chamados do mês volta ao patamar anterior ao problema.</li></ul>
+<h2 id="o-que-ainda-nao-sabemos">O que ainda não sabemos</h2>
+<p>A causa raiz ainda está em investigação — o levantamento está em <a class="wl" href="doc-duplicidade-case-anexo.html" style="--c:var(--t-bug)">Chamado duplicado em resposta de e-mail com anexo</a>. Até entendermos por que acontece, não faz sentido escrever a spec da correção.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 1 entrada</h4>
+  <a class="backlink" href="doc-duplicidade-case-anexo.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-bug)">Investigação de bug</span></span>
+  <span class="bn">Chamado duplicado em resposta de e-mail com anexo</span>
+  <code class="bp">bugs/duplicidade-case-anexo.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 1 saída</h4>
+  <ul><li><span class="tick" style="color:var(--t-bug)">&#9656;</span><a href="doc-duplicidade-case-anexo.html">Chamado duplicado em resposta de e-mail com anexo</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">case</span><span class="st plain">roteamento</span><span class="st plain">email-to-case</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

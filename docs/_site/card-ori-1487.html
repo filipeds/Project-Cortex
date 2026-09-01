@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORI-1487 · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html" aria-current="page">Cards</a><a href="documentos.html">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="cards.html">Cards</a><span class="sep">/</span>ORI-1487</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--violet-lift)">ORI-1487</span>
+    <span class="st ok">em produção</span>
+    <span class="st plain">Sprint 34</span>
+  </div>
+  <h1>Aprovação automática de desconto acima de 15% em Opportunity</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Documentos</span>
+      <span class="meta-v">5</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Primeiro registro</span>
+      <span class="meta-v">2026-07-02</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Última atualização</span>
+      <span class="meta-v">2026-08-19</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Cobertura</span>
+      <span class="meta-v">5 de 5 tipos</span>
+    </div></div>
+</header>
+
+<div class="split">
+  <div class="trail">
+    <div class="tr">
+  <div class="tr-node" style="--c:var(--t-entend)">1</div>
+  <a class="tr-body" href="doc-ori-1487-entendimento.html">
+    <div class="tr-top"><span class="chip" style="--c:var(--t-entend)">Entendimento</span><span class="st ok">concluído</span></div>
+    <h3>Aprovação automática de desconto acima de 15% em Opportunity</h3>
+    <p>Qual é a dor hoje. Toda proposta com desconto acima de 15% entra numa fila manual revisada pelo gerente comercial. A fila é uma lista de visualização no Salesforce que ninguém monitora por…</p>
+    <code class="tr-path">cards/ORI-1487-entendimento.md</code>
+  </a>
+</div><div class="tr">
+  <div class="tr-node" style="--c:var(--t-spec)">2</div>
+  <a class="tr-body" href="doc-ori-1487-aprovacao-desconto.html">
+    <div class="tr-top"><span class="chip" style="--c:var(--t-spec)">Spec</span><span class="st ok">aprovada</span></div>
+    <h3>Alçada de aprovação por faixa de desconto</h3>
+    <p>Contexto. Hoje toda proposta com desconto acima de 15% cai numa fila manual revisada pelo gerente comercial, com espera média de 2,8 dias úteis. O levantamento completo está em…</p>
+    <code class="tr-path">specs/ORI-1487-aprovacao-desconto.md</code>
+  </a>
+</div><div class="tr">
+  <div class="tr-node" style="--c:var(--t-arq)">3</div>
+  <a class="tr-body" href="doc-ori-1487-approval-process.html">
+    <div class="tr-top"><span class="chip" style="--c:var(--t-arq)">Arquitetura</span><span class="st ok">decidida</span></div>
+    <h3>Por que Approval Process nativo e não automação em Apex</h3>
+    <p>Decisão. A alçada usa o Approval Process nativo da plataforma , acionado por uma automação de registro que só dispara quando o desconto muda. O cálculo da faixa fica numa classe de serviço,…</p>
+    <code class="tr-path">arquitetura/ORI-1487-approval-process.md</code>
+  </a>
+</div><div class="tr">
+  <div class="tr-node" style="--c:var(--t-bug)">4</div>
+  <a class="tr-body" href="doc-ori-1487-aprovacao-duplicada.html">
+    <div class="tr-top"><span class="chip" style="--c:var(--t-bug)">Investigação de bug</span><span class="st ok">resolvido</span></div>
+    <h3>Aprovação disparava duas vezes ao reabrir a proposta</h3>
+    <p>Sintoma. Proposta que já tinha passado por aprovação e voltado para edição gerava uma segunda solicitação de aprovação assim que era salva de novo — mesmo sem ninguém tocar no desconto. O…</p>
+    <code class="tr-path">bugs/ORI-1487-aprovacao-duplicada.md</code>
+  </a>
+</div><div class="tr">
+  <div class="tr-node" style="--c:var(--t-entrega)">5</div>
+  <a class="tr-body" href="doc-ori-1487-entrega.html">
+    <div class="tr-top"><span class="chip" style="--c:var(--t-entrega)">Entrega</span><span class="st ok">em produção</span></div>
+    <h3>Alçada automática de desconto em produção</h3>
+    <p>O que foi entregue. Approval Process Aprovacao Desconto com quatro etapas, uma por faixa de alcada-comercial, resolvendo aprovador por papel na hierarquia. Flow AlcadaDesconto , automação…</p>
+    <code class="tr-path">entregas/ORI-1487-entrega.md</code>
+  </a>
+</div>
+  </div>
+  <aside>
+    <div class="side">
+  <h4>Componentes tocados</h4>
+  <ul><li><span class="tick">&#9656;</span><code>Opportunity</code></li><li><span class="tick">&#9656;</span><code>Desconto__c</code></li><li><span class="tick">&#9656;</span><code>DiscountApprovalService</code></li><li><span class="tick">&#9656;</span><code>Flow_AlcadaDesconto</code></li><li><span class="tick">&#9656;</span><code>Aprovacao_Desconto</code></li><li><span class="tick">&#9656;</span><code>FaixaAprovacao__c</code></li><li><span class="tick">&#9656;</span><code>AprovadorAtual__c</code></li></ul>
+</div>
+    <div class="side">
+  <h4>Regras referenciadas</h4>
+  <ul><li><span class="tick" style="color:var(--t-regra)">&#9656;</span><a href="doc-alcada-comercial.html">Alçada comercial por faixa de desconto</a></li></ul>
+</div>
+    <div class="side">
+  <h4>Cards relacionados</h4>
+  <ul><li><span class="tick">&#9656;</span><span><a href="card-ori-1291.html"><code>ORI-1291</code></a> — compartilha Opportunity</span></li><li><span class="tick">&#9656;</span><span><a href="card-ori-1531.html"><code>ORI-1531</code></a> — citado na documentacao</span></li></ul>
+</div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

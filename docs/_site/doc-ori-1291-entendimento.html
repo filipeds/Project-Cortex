@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preço não pode mudar depois que a proposta foi assinada · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Entendimentos</a><span class="sep">/</span>ORI-1291-entendimento.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-entend)">Entendimento</span>
+    <a href="card-ori-1291.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1291</span></a>
+    <span class="st ok">concluído</span>
+  </div>
+  <h1>Preço não pode mudar depois que a proposta foi assinada</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-04-19</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">1 saída · 1 entrada</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#qual-e-a-dor-hoje">Qual é a dor hoje</a></li><li><a href="#o-que-se-espera">O que se espera</a></li><li><a href="#como-saberemos-que-resolveu">Como saberemos que resolveu</a></li><li><a href="#relacao-com-outras-regras">Relação com outras regras</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">entendimento</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Preço não pode mudar depois que a proposta foi assinada</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1291</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">concluído</span>
+<span class="k">sprint</span><span class="d">:</span> <span class="v">Sprint 28</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">opportunity</span>
+  <span class="d">-</span> <span class="v">preco</span>
+  <span class="d">-</span> <span class="v">contrato</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-04-19</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="qual-e-a-dor-hoje">Qual é a dor hoje</h2>
+<p>Depois que o cliente assina a proposta, o registro no Salesforce continua editável. Já aconteceu de um reajuste de tabela ser aplicado em massa e alterar o valor de propostas que já estavam assinadas.</p>
+<p>Quando isso acontece, o documento que o cliente tem em mãos e o que o sistema mostra passam a divergir. A correção é manual, registro a registro, e depende de alguém perceber.</p>
+<h2 id="o-que-se-espera">O que se espera</h2>
+<p>Que a assinatura congele o preço. A partir dali, alterar valor ou desconto exige um caminho explícito — não pode ser efeito colateral de outra operação.</p>
+<h2 id="como-saberemos-que-resolveu">Como saberemos que resolveu</h2>
+<ul><li>Reajuste de tabela em massa não altera proposta assinada.</li><li>Tentativa de editar preço em proposta assinada é bloqueada com mensagem clara.</li><li>Existe um caminho auditável para o caso legítimo de renegociação.</li></ul>
+<h2 id="relacao-com-outras-regras">Relação com outras regras</h2>
+<p>Este card é a origem da regra descrita em <a class="wl" href="doc-congelamento-preco.html" style="--c:var(--t-regra)">Congelamento de preço após assinatura</a>, que passou a valer para todo o projeto depois desta entrega.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 1 entrada</h4>
+  <a class="backlink" href="doc-ori-1291-congelamento-preco.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-spec)">Spec</span></span>
+  <span class="bn">Bloqueio de alteração de preço em proposta assinada</span>
+  <code class="bp">specs/ORI-1291-congelamento-preco.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 1 saída</h4>
+  <ul><li><span class="tick" style="color:var(--t-regra)">&#9656;</span><a href="doc-congelamento-preco.html">Congelamento de preço após assinatura</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">opportunity</span><span class="st plain">preco</span><span class="st plain">contrato</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

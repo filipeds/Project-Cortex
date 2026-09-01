@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bloqueio de alteração de preço em proposta assinada · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Specs</a><span class="sep">/</span>ORI-1291-congelamento-preco.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-spec)">Spec</span>
+    <a href="card-ori-1291.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1291</span></a>
+    <span class="st ok">aprovada</span>
+  </div>
+  <h1>Bloqueio de alteração de preço em proposta assinada</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-05-06</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">3 saídas · 1 entrada</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#contexto">Contexto</a></li><li><a href="#comportamento-esperado">Comportamento esperado</a></li><li><a href="#caminho-legitimo-de-excecao">Caminho legítimo de exceção</a></li><li><a href="#criterios-de-aceite">Critérios de aceite</a></li><li><a href="#fora-de-escopo">Fora de escopo</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">spec</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Bloqueio de alteração de preço em proposta assinada</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1291</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">aprovada</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">opportunity</span>
+  <span class="d">-</span> <span class="v">preco</span>
+  <span class="d">-</span> <span class="v">contrato</span>
+<span class="k">related</span><span class="d">:</span>
+  <span class="d">-</span> <span class="l">congelamento-preco</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-05-06</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="contexto">Contexto</h2>
+<p>Reajuste de tabela em massa já alterou o valor de propostas assinadas, criando divergência entre o documento do cliente e o sistema. O caso está em <a class="wl" href="doc-ori-1291-entendimento.html" style="--c:var(--t-entend)">Preço não pode mudar depois que a proposta foi assinada</a>.</p>
+<h2 id="comportamento-esperado">Comportamento esperado</h2>
+<p>A partir do momento em que a proposta é marcada como assinada, os campos de valor e desconto ficam bloqueados para qualquer edição — manual, em massa ou por automação.</p>
+<p>O bloqueio não é apenas de interface: ele vale também para atualizações vindas de importação e de processos automáticos, que é por onde o problema entrou.</p>
+<h2 id="caminho-legitimo-de-excecao">Caminho legítimo de exceção</h2>
+<p>Renegociação de proposta assinada existe e é válida. Ela passa por um caminho explícito: a proposta é revertida para o estágio de negociação, o que registra autor e data, e só então os campos voltam a ser editáveis.</p>
+<p>Reverter uma proposta assinada exige o mesmo nível de alçada que aprovaria o desconto dela, conforme <a class="wl" href="doc-alcada-comercial.html" style="--c:var(--t-regra)">Alçada comercial por faixa de desconto</a>.</p>
+<h2 id="criterios-de-aceite">Critérios de aceite</h2>
+<ul><li>Edição manual de valor em proposta assinada é bloqueada com mensagem clara.</li><li>Atualização em massa não altera proposta assinada e não falha silenciosamente: os registros ignorados aparecem no resultado da operação.</li><li>Reversão para negociação registra quem reverteu e quando.</li><li>Proposta não assinada continua totalmente editável.</li></ul>
+<h2 id="fora-de-escopo">Fora de escopo</h2>
+<p>Congelamento de itens de produto individuais dentro da proposta. Este card trata do valor e do desconto no cabeçalho.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 1 entrada</h4>
+  <a class="backlink" href="doc-congelamento-preco.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-regra)">Regra de negócio</span></span>
+  <span class="bn">Congelamento de preço após assinatura</span>
+  <code class="bp">regras/congelamento-preco.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 3 saídas</h4>
+  <ul><li><span class="tick" style="color:var(--t-entend)">&#9656;</span><a href="doc-ori-1291-entendimento.html">Preço não pode mudar depois que a proposta foi assinada</a></li><li><span class="tick" style="color:var(--t-regra)">&#9656;</span><a href="doc-alcada-comercial.html">Alçada comercial por faixa de desconto</a></li><li><span class="tick" style="color:var(--t-regra)">&#9656;</span><a href="doc-congelamento-preco.html">Congelamento de preço após assinatura</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">opportunity</span><span class="st plain">preco</span><span class="st plain">contrato</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

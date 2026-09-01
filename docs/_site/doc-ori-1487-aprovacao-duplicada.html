@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aprovação disparava duas vezes ao reabrir a proposta · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Investigações de bug</a><span class="sep">/</span>ORI-1487-aprovacao-duplicada.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-bug)">Investigação de bug</span>
+    <a href="card-ori-1487.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1487</span></a>
+    <span class="st ok">resolvido</span>
+  </div>
+  <h1>Aprovação disparava duas vezes ao reabrir a proposta</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-08-05</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Severidade</span>
+      <span class="meta-v">alta</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">2 saídas · 3 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#sintoma">Sintoma</a></li><li><a href="#causa-raiz">Causa raiz</a></li><li><a href="#correcao">Correção</a></li><li><a href="#por-que-a-spec-nao-pegou-isso">Por que a spec não pegou isso</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">bug</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Aprovação disparava duas vezes ao reabrir a proposta</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1487</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">resolvido</span>
+<span class="k">severity</span><span class="d">:</span> <span class="v">alta</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">opportunity</span>
+  <span class="d">-</span> <span class="v">aprovacao</span>
+<span class="k">components</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">Opportunity</span>
+  <span class="d">-</span> <span class="v">Flow_AlcadaDesconto</span>
+<span class="k">related</span><span class="d">:</span>
+  <span class="d">-</span> <span class="l">ORI-1487-aprovacao-desconto</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-08-05</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="sintoma">Sintoma</h2>
+<p>Proposta que já tinha passado por aprovação e voltado para edição gerava uma segunda solicitação de aprovação assim que era salva de novo — mesmo sem ninguém tocar no desconto.</p>
+<p>O aprovador recebia duas notificações do mesmo registro. Aprovar uma delas não encerrava a outra, e a proposta ficava presa até alguém rejeitar manualmente a solicitação órfã.</p>
+<p>Passos para reproduzir:</p>
+<ol><li>Criar proposta com 30% de desconto e submeter à aprovação.</li><li>Aprovar.</li><li>Reabrir a proposta e alterar qualquer campo que não seja o desconto.</li><li>Salvar. Uma segunda solicitação aparece.</li></ol>
+<h2 id="causa-raiz">Causa raiz</h2>
+<p>A automação de registro estava configurada para rodar em qualquer atualização, sem filtro de mudança real no campo de desconto.</p>
+<p>O ponto que enganou na primeira leitura: o critério de entrada <em>verificava</em> o valor do desconto — <code>desconto &gt; 15</code> — e por isso parecia estar filtrando. Mas essa condição continua verdadeira depois da aprovação, porque o desconto de 30% continua lá. O que faltava não era testar o valor, e sim testar se ele <strong>mudou</strong>.</p>
+<p>Sem essa distinção, toda atualização de um registro com desconto alto reabria o processo.</p>
+<h2 id="correcao">Correção</h2>
+<p>Filtro de entrada passou a exigir mudança efetiva do campo, comparando o valor novo com o anterior, além da condição de faixa que já existia.</p>
+<p>A decisão de arquitetura em <a class="wl" href="doc-ori-1487-approval-process.html" style="--c:var(--t-arq)">Por que Approval Process nativo e não automação em Apex</a> foi atualizada com essa consequência, para que quem estender a alçada para outros objetos em ORI-1531 não repita o erro.</p>
+<h2 id="por-que-a-spec-nao-pegou-isso">Por que a spec não pegou isso</h2>
+<p>A spec original dizia &quot;ao salvar uma proposta com desconto preenchido, submeter à aprovação&quot;. Estava literalmente correta, e foi implementada como escrita.</p>
+<p>O critério de aceite que faltava — &quot;alterar qualquer campo que não seja o desconto não reabre aprovação já concluída&quot; — foi acrescentado a <a class="wl" href="doc-ori-1487-aprovacao-desconto.html" style="--c:var(--t-spec)">Alçada de aprovação por faixa de desconto</a> depois deste bug.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 3 entradas</h4>
+  <a class="backlink" href="doc-ori-1487-approval-process.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-arq)">Arquitetura</span></span>
+  <span class="bn">Por que Approval Process nativo e não automação em Apex</span>
+  <code class="bp">arquitetura/ORI-1487-approval-process.md</code>
+</a><a class="backlink" href="doc-ori-1487-entrega.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-entrega)">Entrega</span></span>
+  <span class="bn">Alçada automática de desconto em produção</span>
+  <code class="bp">entregas/ORI-1487-entrega.md</code>
+</a><a class="backlink" href="doc-ori-1487-aprovacao-desconto.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-spec)">Spec</span></span>
+  <span class="bn">Alçada de aprovação por faixa de desconto</span>
+  <code class="bp">specs/ORI-1487-aprovacao-desconto.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 2 saídas</h4>
+  <ul><li><span class="tick" style="color:var(--t-arq)">&#9656;</span><a href="doc-ori-1487-approval-process.html">Por que Approval Process nativo e não automação em Apex</a></li><li><span class="tick" style="color:var(--t-spec)">&#9656;</span><a href="doc-ori-1487-aprovacao-desconto.html">Alçada de aprovação por faixa de desconto</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">opportunity</span><span class="st plain">aprovacao</span></div><h4 style="margin-top:20px">Componentes</h4><ul><li><span class="tick">&#9656;</span><code>Opportunity</code></li><li><span class="tick">&#9656;</span><code>Flow_AlcadaDesconto</code></li></ul></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

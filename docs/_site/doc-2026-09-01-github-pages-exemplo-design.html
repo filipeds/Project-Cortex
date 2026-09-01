@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026-09-01-github-pages-exemplo-design · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Documentos</a><span class="sep">/</span>2026-09-01-github-pages-exemplo-design.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--neutro)">sem tipo</span>
+    
+    
+  </div>
+  <h1>2026-09-01-github-pages-exemplo-design</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">0 saídas · 0 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#contexto">Contexto</a></li><li><a href="#objetivo">Objetivo</a></li><li><a href="#o-que-muda">O que muda</a></li><li><a href="#fora-do-escopo">Fora do escopo</a></li><li><a href="#criterio-de-aceite">Critério de aceite</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+
+<span class="d">---</span></div>
+    <div class="prose"><h1 id="publicar-a-wiki-de-demonstracao-no-github-pages">Publicar a wiki de demonstração no GitHub Pages</h1>
+<h2 id="contexto">Contexto</h2>
+<p>O README mostra o site gerado pelo Doczilla só como um GIF estático (<code>docs-assets/preview/preview.gif</code>). Não há como clicar e navegar de verdade sem clonar o repositório e rodar <code>build</code>. Ao mesmo tempo, <code>FLUXO-DA-EQUIPE.md</code> já descreve como prática do projeto que <code>docs/_site/</code> seja versionado — mas o <code>.gitignore</code> atual (<code>docs/_site/</code>) nunca deixou isso acontecer neste próprio repositório. Esta mudança corrige a inconsistência e usa o resultado para dar um exemplo ao vivo.</p>
+<p><code>main</code> hoje tem só o commit inicial (vazio). Todo o código do Doczilla e a <code>docs/</code> de demonstração vivem em <code>feat/estrutura-do-sistema</code>, já publicado no <code>origin</code>. Por decisão do usuário, <code>main</code> deve continuar enxuta — sem o código da ferramenta nem a demonstração — então a publicação parte do próprio branch de feature, sem merge para <code>main</code>.</p>
+<h2 id="objetivo">Objetivo</h2>
+<p>Dar um link público (<code>https://filipeds.github.io/Project-Cortex/</code>) que abre a wiki gerada do &quot;Projeto Órion&quot; — a mesma navegação do GIF (início → card → documento com backlinks → busca → mapa de ligações), mas navegável de verdade.</p>
+<h2 id="o-que-muda">O que muda</h2>
+<h3 id="1-gitignore">1. <code>.gitignore</code></h3>
+<p>Remove a linha <code>docs/_site/</code>. As demais entradas (<code>node_modules/</code>, <code>*.log</code>, <code>test/fixtures/**/_site/</code>, etc.) continuam — só a saída da demonstração passa a ser versionada, como o próprio <code>FLUXO-DA-EQUIPE.md</code> já prescreve.</p>
+<h3 id="2-regenerar-docs-site">2. Regenerar <code>docs/_site/</code></h3>
+<p>Antes de commitar:</p>
+<pre class="codebox" data-lang="bash"><code>node bin/doczilla.js build --verificar   # confere que a saída bate com os .md atuais
+node bin/doczilla.js build               # gera de fato</code></pre>
+<p>Se <code>--verificar</code> já passar (saída em dia), o <code>build</code> normal reproduz os mesmos bytes — reforça o invariante de build determinístico descrito no <code>CLAUDE.md</code>. O commit inclui os arquivos gerados (<code>~32</code> arquivos, pelo número citado em <code>FLUXO-DA-EQUIPE.md</code>).</p>
+<h3 id="3-github-workflows-pages-yml">3. <code>.github/workflows/pages.yml</code></h3>
+<p>Workflow novo. Gatilho:</p>
+<pre class="codebox" data-lang="yaml"><code>on:
+  push:
+    branches: [feat/estrutura-do-sistema]
+  workflow_dispatch:</code></pre>
+<p>Ele <strong>não builda nada</strong> — só publica o <code>docs/_site/</code> já commitado, via <code>actions/upload-pages-artifact@v3</code> (path: <code>docs/_site</code>) e <code>actions/deploy-pages@v4</code>. Isso é deliberado: a fonte de verdade do conteúdo publicado é o commit, não uma rebuild em CI, o que mantém a garantia de que &quot;o que está no repositório é exatamente o que abre&quot; — a mesma garantia que já vale para quem dá <code>git pull</code> e abre <code>docs/_site/index.html</code> localmente.</p>
+<p>Permissões do job: <code>pages: write</code>, <code>id-token: write</code>, ambiente <code>github-pages</code>.</p>
+<h3 id="4-ativar-o-github-pages-no-repositorio">4. Ativar o GitHub Pages no repositório</h3>
+<p>Via <code>gh api repos/filipeds/Project-Cortex/pages</code>, fonte = GitHub Actions (<code>build_type: workflow</code>), não a opção clássica de branch/pasta — não faria sentido aqui já que o conteúdo está em <code>docs/_site/</code>, não na raiz nem em <code>docs/</code>.</p>
+<h3 id="5-readme">5. README</h3>
+<p>A seção &quot;Como fica&quot; ganha, junto ao GIF, um link para o site publicado — algo como &quot;veja funcionando: &lt;link&gt;&quot; — sem remover o GIF (ele continua útil para quem olha o README fora do navegador, ex. no editor).</p>
+<h2 id="fora-do-escopo">Fora do escopo</h2>
+<ul><li>Nenhuma mudança em <code>main</code>.</li><li>Nenhuma mudança no pipeline do Doczilla (<code>load/graph/validate/render</code>).</li><li>Não se cria branch <code>gh-pages</code> nem se usa a opção clássica de Pages — só Actions.</li></ul>
+<h2 id="criterio-de-aceite">Critério de aceite</h2>
+<ul><li><code>https://filipeds.github.io/Project-Cortex/</code> abre a wiki do Projeto Órion e a navegação (card → documento → busca → mapa) funciona igual ao que o GIF mostra.</li><li>Um novo push em <code>feat/estrutura-do-sistema</code> que mude <code>docs/_site/</code> republica automaticamente, sem passo manual.</li><li><code>main</code> permanece com apenas o commit inicial.</li></ul></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks</h4>
+  <p style="margin:0; font-size:14px; color:var(--text-mute)">Nenhum documento aponta para este ainda.</p>
+</div>
+    
+    
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

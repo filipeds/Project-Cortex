@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status de pedido sincronizado a partir do ERP · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Entregas</a><span class="sep">/</span>ORI-1466-entrega.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-entrega)">Entrega</span>
+    <a href="card-ori-1466.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1466</span></a>
+    <span class="st ok">em produção</span>
+  </div>
+  <h1>Status de pedido sincronizado a partir do ERP</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-07-24</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Implantado</span>
+      <span class="meta-v">2026-07-24</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">1 saída · 0 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#o-que-foi-entregue">O que foi entregue</a></li><li><a href="#como-validar-em-producao">Como validar em produção</a></li><li><a href="#como-reverter">Como reverter</a></li><li><a href="#efeito-colateral-esperado">Efeito colateral esperado</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">entrega</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Status de pedido sincronizado a partir do ERP</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1466</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">em produção</span>
+<span class="k">deployed</span><span class="d">:</span> <span class="v">2026-07-24</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">integracao</span>
+  <span class="d">-</span> <span class="v">pedido</span>
+  <span class="d">-</span> <span class="v">platform-events</span>
+<span class="k">components</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">Pedido__c</span>
+  <span class="d">-</span> <span class="v">StatusPedido__e</span>
+  <span class="d">-</span> <span class="v">PedidoStatusHandler</span>
+  <span class="d">-</span> <span class="v">PendenciaIntegracao__c</span>
+<span class="k">related</span><span class="d">:</span>
+  <span class="d">-</span> <span class="l">ORI-1466-status-pedido</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-07-24</span>
+<span class="k">rollback</span><span class="d">:</span> <span class="v">desativar a inscrição no evento StatusPedido__e</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="o-que-foi-entregue">O que foi entregue</h2>
+<ul><li><strong>Evento <code>StatusPedido__e</code></strong>, com número do pedido, novo status e data da mudança no ERP.</li><li><strong><code>PedidoStatusHandler</code></strong>, inscrito no evento, que localiza o pedido, valida a ordem da mudança e aplica o novo status.</li><li><strong><code>PendenciaIntegracao__c</code></strong>, onde caem os eventos de pedidos que o Salesforce não conhece, para tratamento posterior sem perda.</li><li>Campo de status e data da última sincronização no pedido.</li></ul>
+<h2 id="como-validar-em-producao">Como validar em produção</h2>
+<ol><li>Publicar um evento de teste com status <code>EM_SEPARACAO</code> para um pedido existente. <strong>Esperado:</strong> status atualizado em menos de 5 minutos.</li><li>Publicar o mesmo evento de novo. <strong>Esperado:</strong> nenhuma alteração, nenhum log novo — a repetição é ignorada.</li><li>Publicar um evento com data anterior à do status atual. <strong>Esperado:</strong> descartado; o pedido não regride de estado.</li><li>Publicar um evento com número de pedido inexistente. <strong>Esperado:</strong> um registro de pendência criado, sem erro.</li><li>Conferir o comportamento no fim da janela de manutenção do ERP. <strong>Esperado:</strong> eventos acumulados processados em lote, sem perda.</li></ol>
+<h2 id="como-reverter">Como reverter</h2>
+<p>Desativar a inscrição no evento. Os pedidos param de receber atualização e mantêm o último status conhecido — nenhum dado é perdido, e a retomada reprocessa a partir dos eventos ainda retidos.</p>
+<h2 id="efeito-colateral-esperado">Efeito colateral esperado</h2>
+<p>A planilha manual mantida pela logística deixa de ser necessária. A desativação dela é combinada com a área e não faz parte desta entrega técnica.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks</h4>
+  <p style="margin:0; font-size:14px; color:var(--text-mute)">Nenhum documento aponta para este ainda.</p>
+</div>
+    <div class="side">
+  <h4>Aponta para · 1 saída</h4>
+  <ul><li><span class="tick" style="color:var(--t-spec)">&#9656;</span><a href="doc-ori-1466-status-pedido.html">Sincronização de status de pedido vinda do ERP</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">integracao</span><span class="st plain">pedido</span><span class="st plain">platform-events</span></div><h4 style="margin-top:20px">Componentes</h4><ul><li><span class="tick">&#9656;</span><code>Pedido__c</code></li><li><span class="tick">&#9656;</span><code>StatusPedido__e</code></li><li><span class="tick">&#9656;</span><code>PedidoStatusHandler</code></li><li><span class="tick">&#9656;</span><code>PendenciaIntegracao__c</code></li></ul></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

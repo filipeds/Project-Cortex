@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alçada de aprovação por faixa de desconto · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Specs</a><span class="sep">/</span>ORI-1487-aprovacao-desconto.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-spec)">Spec</span>
+    <a href="card-ori-1487.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1487</span></a>
+    <span class="st ok">aprovada</span>
+  </div>
+  <h1>Alçada de aprovação por faixa de desconto</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-08-19</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Revisado por</span>
+      <span class="meta-v">Coordenação técnica</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">5 saídas · 5 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#contexto">Contexto</a></li><li><a href="#comportamento-esperado">Comportamento esperado</a></li><li><a href="#faixas-e-aprovadores">Faixas e aprovadores</a></li><li><a href="#criterios-de-aceite">Critérios de aceite</a></li><li><a href="#casos-de-borda">Casos de borda</a></li><li><a href="#fora-de-escopo">Fora de escopo</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">spec</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Alçada de aprovação por faixa de desconto</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1487</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">aprovada</span>
+<span class="k">reviewer</span><span class="d">:</span> <span class="v">Coordenação técnica</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">opportunity</span>
+  <span class="d">-</span> <span class="v">aprovacao</span>
+  <span class="d">-</span> <span class="v">comercial</span>
+<span class="k">related</span><span class="d">:</span>
+  <span class="d">-</span> <span class="l">alcada-comercial</span>
+  <span class="d">-</span> <span class="l">ORI-1487-approval-process</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-08-19</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="contexto">Contexto</h2>
+<p>Hoje toda proposta com desconto acima de 15% cai numa fila manual revisada pelo gerente comercial, com espera média de 2,8 dias úteis. O levantamento completo está em <a class="wl" href="doc-ori-1487-entendimento.html" style="--c:var(--t-entend)">Aprovação automática de desconto acima de 15% em Opportunity</a>.</p>
+<p>Esta spec define a alçada automática que substitui essa fila. Os percentuais não são definidos aqui: eles vêm de <a class="wl" href="doc-alcada-comercial.html" style="--c:var(--t-regra)">Alçada comercial por faixa de desconto</a>, e alterá-los exige atualizar aquele documento primeiro.</p>
+<h2 id="comportamento-esperado">Comportamento esperado</h2>
+<p>Ao salvar uma proposta com o campo de desconto preenchido, o sistema calcula a faixa e submete ao aprovador correspondente. Descontos de até 15% não geram solicitação alguma — a proposta segue direto.</p>
+<p>A avaliação acontece apenas quando o valor do desconto <strong>muda de fato</strong>. Salvar o registro por qualquer outro motivo não reabre aprovação.</p>
+<pre class="codebox" data-lang="apex"><code>public static ApprovalTier resolveTier(Decimal desconto) {
+    if (desconto == null)  return ApprovalTier.AUTOMATIC;
+    if (desconto &lt;= 15)    return ApprovalTier.AUTOMATIC;
+    if (desconto &lt;= 25)    return ApprovalTier.COORDINATOR;
+    if (desconto &lt;= 40)    return ApprovalTier.MANAGER;
+    return ApprovalTier.DIRECTOR;
+}</code></pre>
+<h2 id="faixas-e-aprovadores">Faixas e aprovadores</h2>
+<div class="tablewrap"><table><thead><tr><th>Faixa de desconto</th><th>Aprovador</th><th>SLA</th><th>Automático</th></tr></thead><tbody><tr><td>Até 15%</td><td>—</td><td>imediato</td><td>Sim</td></tr><tr><td>15,01% a 25%</td><td>Coordenador Comercial</td><td>4 h</td><td>Não</td></tr><tr><td>25,01% a 40%</td><td>Gerente Comercial</td><td>8 h</td><td>Não</td></tr><tr><td>Acima de 40%</td><td>Diretoria Comercial</td><td>24 h</td><td>Não</td></tr></tbody></table></div>
+<p>O aprovador é resolvido pelo papel na hierarquia, não por usuário nomeado. Se o papel estiver vago, a solicitação sobe para o nível seguinte em vez de falhar.</p>
+<h2 id="criterios-de-aceite">Critérios de aceite</h2>
+<ul><li>Desconto de exatamente 15,00% não gera solicitação de aprovação.</li><li>Desconto de 15,01% gera solicitação para o Coordenador Comercial.</li><li>Desconto nulo ou vazio é tratado como 0% e não gera solicitação.</li><li>Rejeição devolve a proposta ao estágio anterior e limpa o campo de desconto.</li><li>Reenvio após rejeição cria um novo registro de aprovação; não reaproveita o anterior.</li><li>Alterar qualquer campo que não seja o desconto não reabre aprovação já concluída.</li><li>O histórico de aprovação fica visível na linha do tempo do registro.</li></ul>
+<h2 id="casos-de-borda">Casos de borda</h2>
+<p>Dois casos apareceram durante a implementação e estão documentados em <a class="wl" href="doc-ori-1487-aprovacao-duplicada.html" style="--c:var(--t-bug)">Aprovação disparava duas vezes ao reabrir a proposta</a>:</p>
+<ol><li><strong>Reabertura de proposta já aprovada.</strong> Sem filtro de mudança real no campo, a automação reavaliava o registro e disparava a aprovação de novo.</li><li><strong>Alteração de valor sem alteração de desconto.</strong> O percentual não muda, mas o valor absoluto sim. Por decisão comercial, não reabre aprovação — o que foi aprovado é o percentual, não o valor.</li></ol>
+<p>Um terceiro caso foi levantado e depende da política de margem mínima descrita em <span class="wl wl-quebrado" title="Nenhum documento com esse nome">politica-margem-minima</span>, que ainda não foi escrita.</p>
+<h2 id="fora-de-escopo">Fora de escopo</h2>
+<p>Aprovação de desconto em orçamento e em contrato de renovação não fazem parte deste card. Foram levantados no refinamento e viraram <a class="wl" href="doc-ori-1531-entendimento.html" style="--c:var(--t-entend)">Estender a alçada de desconto para orçamentos</a>.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 5 entradas</h4>
+  <a class="backlink" href="doc-ori-1487-approval-process.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-arq)">Arquitetura</span></span>
+  <span class="bn">Por que Approval Process nativo e não automação em Apex</span>
+  <code class="bp">arquitetura/ORI-1487-approval-process.md</code>
+</a><a class="backlink" href="doc-ori-1487-aprovacao-duplicada.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-bug)">Investigação de bug</span></span>
+  <span class="bn">Aprovação disparava duas vezes ao reabrir a proposta</span>
+  <code class="bp">bugs/ORI-1487-aprovacao-duplicada.md</code>
+</a><a class="backlink" href="doc-ori-1531-entendimento.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-entend)">Entendimento</span></span>
+  <span class="bn">Estender a alçada de desconto para orçamentos</span>
+  <code class="bp">cards/ORI-1531-entendimento.md</code>
+</a><a class="backlink" href="doc-ori-1487-entrega.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-entrega)">Entrega</span></span>
+  <span class="bn">Alçada automática de desconto em produção</span>
+  <code class="bp">entregas/ORI-1487-entrega.md</code>
+</a><a class="backlink" href="doc-alcada-comercial.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-regra)">Regra de negócio</span></span>
+  <span class="bn">Alçada comercial por faixa de desconto</span>
+  <code class="bp">regras/alcada-comercial.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 5 saídas</h4>
+  <ul><li><span class="tick" style="color:var(--t-entend)">&#9656;</span><a href="doc-ori-1487-entendimento.html">Aprovação automática de desconto acima de 15% em Opportunity</a></li><li><span class="tick" style="color:var(--t-regra)">&#9656;</span><a href="doc-alcada-comercial.html">Alçada comercial por faixa de desconto</a></li><li><span class="tick" style="color:var(--t-bug)">&#9656;</span><a href="doc-ori-1487-aprovacao-duplicada.html">Aprovação disparava duas vezes ao reabrir a proposta</a></li><li><span class="tick" style="color:var(--t-entend)">&#9656;</span><a href="doc-ori-1531-entendimento.html">Estender a alçada de desconto para orçamentos</a></li><li><span class="tick" style="color:var(--t-arq)">&#9656;</span><a href="doc-ori-1487-approval-process.html">Por que Approval Process nativo e não automação em Apex</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">opportunity</span><span class="st plain">aprovacao</span><span class="st plain">comercial</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 21 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>
