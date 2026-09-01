@@ -6,12 +6,13 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   publicar:
@@ -25,6 +26,9 @@ jobs:
 
       - name: Preparar Pages
         uses: actions/configure-pages@v5
+
+      - name: Conferir que docs/_site/ está em dia
+        run: node bin/doczilla.js build --verificar
 
       - name: Upload do artefato (docs/_site)
         uses: actions/upload-pages-artifact@v3

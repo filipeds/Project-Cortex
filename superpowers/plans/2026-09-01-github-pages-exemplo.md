@@ -227,3 +227,12 @@ Expected: `200`.
 - [ ] **Step 5: Checagem final manual**
 
 Abrir `https://filipeds.github.io/Project-Cortex/` no navegador e navegar: início → um card → um documento (conferir backlinks) → busca → mapa de ligações. Confirma visualmente que bate com o que o GIF do README mostra.
+
+## Nota de execução
+
+A Task 4 exigiu um passo além do previsto: o ambiente `github-pages` do
+GitHub só permite deploy a partir de `main` por padrão. Foi preciso adicionar
+`feat/estrutura-do-sistema` à política de branches desse ambiente via
+`gh api repos/filipeds/Project-Cortex/environments/github-pages/deployment-branch-policies`.
+Esse estado vive nas configurações do repositório, não no código — um clone
+novo não reproduz isso sozinho. Reversível apagando essa entrada da política.
