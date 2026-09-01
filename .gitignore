@@ -4,3 +4,4 @@ docs/_site/
 .DS_Store
 Thumbs.db
 test/fixtures/**/_site/
+.superpowers/
