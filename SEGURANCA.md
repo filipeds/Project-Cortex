@@ -156,15 +156,17 @@ São cerca de 4.300 linhas de JavaScript sem dependências, das quais 581 são o
 CSS e o JS do site gerado, guardados como template string. É auditável de
 verdade, não no papel.
 
-Só os devs rodam a ferramenta. Quem não é dev nunca precisa saber que
-`ferramentas/doczilla/` existe: lê o `docs/_site/` já pronto, versionado no
-mesmo repositório.
+Só os devs rodam a ferramenta — ver
+[FLUXO-DA-EQUIPE.md](FLUXO-DA-EQUIPE.md#só-dev-roda-a-ferramenta--o-resto-do-time-só-lê).
+Quem não é dev nunca precisa saber que `ferramentas/doczilla/` existe: lê o
+`docs/_site/` já pronto, versionado no mesmo repositório.
 
 ## Ajustes específicos para repositório Salesforce
 
-Este projeto versiona `docs/_site/`: o site gerado entra no `git`, para quem
-não é dev ler sem instalar nada. Isso muda o que cada arquivo de ignore
-precisa saber:
+Este projeto versiona `docs/_site/` (ver
+[FLUXO-DA-EQUIPE.md](FLUXO-DA-EQUIPE.md#só-dev-roda-a-ferramenta--o-resto-do-time-só-lê)):
+o site gerado entra no `git`, para quem não é dev ler sem instalar nada. Isso
+muda o que cada arquivo de ignore precisa saber:
 
 ```bash
 # .gitignore — NAO ignora docs/_site/. Ela é versionada de propósito.

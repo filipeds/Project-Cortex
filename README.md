@@ -31,7 +31,9 @@ antes de propor qualquer coisa. Veja [Num projeto que já tem
 documentação](#num-projeto-que-já-tem-documentação).
 
 Abra `docs/_site/index.html` no navegador. É um arquivo comum: funciona em
-`file://`, sem instalar nada.
+`file://`. Recomendamos versionar essa pasta no próprio repositório, para que
+quem não é dev leia sem instalar nada — ver [Como a equipe
+usa](#como-a-equipe-usa).
 
 ## A ideia
 
@@ -89,7 +91,9 @@ O build **avisa, mas não falha**. Campo esquecido, wikilink quebrado ou card se
 spec aparecem no terminal e numa tela de saúde dentro da wiki — e o site é
 gerado do mesmo jeito. Ninguém fica sem documentação por causa de um metadado.
 
-Para o CI, `build --strict` transforma avisos críticos em erro.
+Para o CI, `build --strict` transforma avisos críticos em erro; `build
+--verificar` (sem escrever nada) falha se a wiki versionada estiver fora de dia
+com os documentos — ver [Como a equipe usa](#como-a-equipe-usa).
 
 ## Num projeto que já tem documentação
 
@@ -158,6 +162,15 @@ Opcional. Um `doczilla.config.json` na raiz muda apenas cosmética e caminhos:
 Os tipos e seus campos obrigatórios **não** são configuráveis. É de propósito:
 sem isso, cada projeto vira um dialeto e a instrução dada à IA deixa de valer
 em todos eles.
+
+## Como a equipe usa
+
+Só dev roda a ferramenta. `docs/_site/` é versionado: quem não é dev dá `git
+pull` e lê o site por duplo clique, sem instalar nada. Um hook de `pre-commit`
+mantém a saída em dia sozinho, e `build --verificar` fecha a brecha no CI.
+[`FLUXO-DA-EQUIPE.md`](FLUXO-DA-EQUIPE.md) descreve quem escreve o quê, em que
+momento do card, o mecanismo que garante a wiki sempre atualizada — e como
+adotar num time que já tem documentação, sem tarefa de migração.
 
 ## Segurança e uso em repositório corporativo
 
