@@ -41,6 +41,9 @@ usa](#como-a-equipe-usa).
 com a trilha de documentos, a página de um documento com backlinks, busca ao
 vivo no navegador e o mapa de ligações](docs-assets/preview/preview.gif)
 
+**[Veja funcionando](https://filipeds.github.io/Project-Cortex/)** — a wiki do
+Projeto Órion publicada de verdade, navegável no navegador.
+
 Início → card → documento com backlinks → busca ao vivo → mapa de ligações.
 Tudo isso é o site gerado por `build`: HTML e CSS estáticos, sem servidor
 depois de pronto — o que aparece acima é exatamente o que abre por duplo
