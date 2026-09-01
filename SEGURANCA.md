@@ -38,7 +38,8 @@ imprime a proposta no terminal e não toca em nada.
 ## Auditoria: o que foi encontrado e corrigido
 
 Cinco problemas reais foram encontrados ao revisar o código com essa pergunta
-em mente. Todos estão corrigidos.
+em mente. Todos estão corrigidos, com teste de regressão em
+`test/seguranca.test.js`.
 
 ### 1. XSS armazenado no site gerado — corrigido
 
@@ -223,5 +224,10 @@ Sugestão de sequência, cada etapa reversível:
 ## Reconferindo esta auditoria
 
 ```bash
+npm test                      # 83 testes, incluindo os de segurança
+node --test test/seguranca.test.js
 grep -rn "fetch\|child_process\|eval(\|new Function" src/ bin/
 ```
+
+Se você mudar o código da ferramenta, os testes em `test/seguranca.test.js` são
+o que impede as cinco correções acima de se perderem sem ninguém notar.

@@ -16,12 +16,15 @@ Mantenha isso ao acrescentar código.
 ## Comandos
 
 ```bash
+npm test                                  # 83 testes (node --test), sem watch
+node --test test/markdown.test.js         # um arquivo só
 node bin/doczilla.js build                # gera docs/_site/ e imprime os avisos
 node bin/doczilla.js build --strict       # sai com erro se houver aviso crítico
 node bin/doczilla.js build --verificar    # não escreve: sai com erro se _site/ estiver fora de dia
 node bin/doczilla.js serve                # http://localhost:4321 com live reload
 node bin/doczilla.js init --dir <x>       # scaffold do padrão noutro projeto
 node bin/doczilla.js analisar --dir <x>   # pré-leitura: propõe o perfil de um projeto existente
+node bin/doczilla.js build --dir test/fixtures/legado   # o fixture brownfield
 ```
 
 Não há lint nem build step — é ESM puro rodando direto no Node 18+.
@@ -165,12 +168,15 @@ O site precisa abrir por duplo clique, em `file://`, sem rede:
   não do relógio — o relógio só volta em `serve`, via `{ relogio: true }`. Ao
   adicionar qualquer coisa nova ao HTML gerado (contador, id aleatório, hora do
   build), pare e pergunte se aquilo pode variar entre duas rodadas do mesmo
-  conteúdo.
+  conteúdo. Se puder, quebra o `--verificar` e o teste "dois builds seguidos
+  produzem arquivos idênticos" em `test/seguranca.test.js`.
 - **Nunca escreva `npx doczilla` em texto gerado ou impresso.** Não existe
   pacote publicado — a ferramenta se instala copiando o código para dentro do
-  projeto. Toda mensagem que sugere um comando (CLI e páginas geradas) usa
-  `invocacao`, calculada em `invocacaoAtual()` (`cli.js`) a partir de
-  `process.argv[1]` e propagada por `build()`/`serve()` até `projeto.invocacao`.
+  projeto (`SEGURANCA.md`). Toda mensagem que sugere um comando (CLI e páginas
+  geradas) usa `invocacao`, calculada em `invocacaoAtual()` (`cli.js`) a partir
+  de `process.argv[1]` e propagada por `build()`/`serve()` até `projeto.invocacao`.
+  O teste `'nenhuma pagina gerada sugere "npx doczilla"'` em
+  `test/seguranca.test.js` existe para pegar quem esquecer disso.
 
 ## A `docs/` de demonstração
 
@@ -182,6 +188,12 @@ Contém defeitos **propositais**, que fazem a tela de saúde ter o que mostrar:
 - `ORI-1502` e `ORI-1531` não têm spec → avisos de cobertura.
 
 Um build limpo dessa pasta significa que alguém apagou o defeito por engano.
+
+Há também `test/fixtures/legado/` — a "Plataforma Vela", um projeto **fictício**
+que nunca ouviu falar do Doczilla: `.md` em três raízes, quase nenhum
+frontmatter, dois `README.md` disputando o nome e ligações só por link
+relativo. É o fixture do regime descoberto, e o esperado é
+`0 críticos · 0 avisos · 3 observações` com os 6 documentos preservados.
 
 Todo o conteúdo é **fictício**. Ao criar ou editar documentos de demonstração,
 invente os dados: nunca use nome de cliente real, credencial, endpoint de

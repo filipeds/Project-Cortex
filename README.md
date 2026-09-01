@@ -184,6 +184,10 @@ dependência de git.
 
 ## Desenvolvimento
 
+```bash
+npm test    # 83 testes, runner nativo do Node
+```
+
 Zero dependências de runtime. Parser de frontmatter, renderer Markdown e gerador
 de site são próprios, para que instalar o Doczilla num projeto Salesforce não
 signifique arrastar uma árvore de `node_modules` junto. Requer Node 18+.
