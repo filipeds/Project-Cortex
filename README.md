@@ -35,6 +35,17 @@ Abra `docs/_site/index.html` no navegador. É um arquivo comum: funciona em
 quem não é dev leia sem instalar nada — ver [Como a equipe
 usa](#como-a-equipe-usa).
 
+## Como fica
+
+![Preview do Doczilla: início com os números do projeto, a página de um card
+com a trilha de documentos, a página de um documento com backlinks, busca ao
+vivo no navegador e o mapa de ligações](docs-assets/preview/preview.gif)
+
+Início → card → documento com backlinks → busca ao vivo → mapa de ligações.
+Tudo isso é o site gerado por `build`: HTML e CSS estáticos, sem servidor
+depois de pronto — o que aparece acima é exatamente o que abre por duplo
+clique em `docs/_site/index.html`.
+
 ## A ideia
 
 **O card é o eixo.** Todo documento declara a que card pertence. A página do
