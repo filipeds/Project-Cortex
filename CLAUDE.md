@@ -133,6 +133,12 @@ O site precisa abrir por duplo clique, em `file://`, sem rede:
   como template strings, e são escritos como `styles.css` / `app.js` no build.
   A paleta é definida por tokens CSS em `:root`, com temas claro e escuro
   resolvidos via `prefers-color-scheme` e `[data-theme]`.
+- **`docs/_site/` é versionado, não ignorado.** É publicado ao vivo no GitHub
+  Pages por `.github/workflows/pages.yml` a cada push em
+  `feat/estrutura-do-sistema`. Por isso, editar algo em `docs/` sem rodar
+  `build` e commitar o `_site/` resultante antes do push deixa o site
+  publicado desatualizado — siga o mesmo fluxo descrito em
+  `FLUXO-DA-EQUIPE.md`.
 
 ## Armadilhas conhecidas
 
@@ -171,6 +177,15 @@ O site precisa abrir por duplo clique, em `file://`, sem rede:
   projeto. Toda mensagem que sugere um comando (CLI e páginas geradas) usa
   `invocacao`, calculada em `invocacaoAtual()` (`cli.js`) a partir de
   `process.argv[1]` e propagada por `build()`/`serve()` até `projeto.invocacao`.
+- **Nunca deixe arquivo de trabalho dentro de `docs/`.** A pasta inteira é
+  varrida pelo build, e agora que `docs/_site/` é versionado e publicado no
+  GitHub Pages, qualquer coisa esquecida ali — spec, plano, rascunho, nota de
+  sessão — vira página pública da wiki no próximo push. Já aconteceu: planos
+  de sessão deixados em `docs/superpowers/` foram renderizados como duas
+  páginas extras na wiki de demonstração antes de alguém notar. O lugar certo
+  para esse tipo de arquivo é `superpowers/` na raiz do repositório (versionado
+  em git) — não confundir com `.superpowers/`, um diretório separado e
+  ignorado pelo git, usado como área de rascunho.
 
 ## A `docs/` de demonstração
 

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Padrão · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html" aria-current="page">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<section class="sec">
+  <div class="sec-head bare">
+    <h2 class="sec-label">Estrutura de docs/</h2>
+    <p class="sec-lead"><b>A pasta organiza para o olho humano; o frontmatter é o que o Doczilla lê.</b> Mover um arquivo de pasta não quebra a wiki: só muda onde ele aparece na árvore.</p>
+  </div>
+  <pre class="tree"><span class="dir">docs/</span>
+├── <span class="hl">DOCUMENTATION-GUIDE.md</span>
+├── <span class="dir">arquitetura/</span>   <span class="cm"># type: arquitetura</span>
+│   ├── ORI-1466-eventos-pedido.md
+│   └── ORI-1487-approval-process.md
+├── <span class="dir">bugs/</span>   <span class="cm"># type: bug</span>
+│   ├── duplicidade-case-anexo.md
+│   └── ORI-1487-aprovacao-duplicada.md
+├── <span class="dir">cards/</span>   <span class="cm"># type: entendimento</span>
+│   ├── ORI-1291-entendimento.md
+│   ├── ORI-1466-entendimento.md
+│   ├── ORI-1487-entendimento.md
+│   ├── ORI-1502-entendimento.md
+│   └── ORI-1531-entendimento.md
+├── <span class="dir">entregas/</span>   <span class="cm"># type: entrega</span>
+│   ├── ORI-1291-entrega.md
+│   ├── ORI-1466-entrega.md
+│   └── ORI-1487-entrega.md
+├── <span class="dir">regras/</span>   <span class="cm"># type: regra</span>
+│   ├── alcada-comercial.md
+│   ├── congelamento-preco.md
+│   └── nomenclatura-componentes.md
+├── <span class="dir">specs/</span>   <span class="cm"># type: spec</span>
+│   ├── ORI-1291-congelamento-preco.md
+│   ├── ORI-1466-status-pedido.md
+│   └── ORI-1487-aprovacao-desconto.md
+└── <span class="dir">_site/</span>                    <span class="cm"># saída do build (fica no .gitignore)</span></pre>
+<div class="note">
+  <span class="ic">i</span>
+  <p><b>É o <code>DOCUMENTATION-GUIDE.md</code> que fecha o ciclo.</b> Ele é criado pelo <code>node bin/doczilla.js init</code> e traz o padrão em forma de instrução para a IA. Aponte seu <code>CLAUDE.md</code> para ele uma vez e toda documentação nasce no formato certo, sem ninguém precisar lembrar dos campos.</p>
+</div>
+</section>
+
+<section class="sec">
+  <div class="sec-head">
+    <h2 class="sec-label">Campos por tipo</h2>
+    <p class="sec-lead"><b>Quatro campos valem para todos</b> — <code>type</code>, <code>title</code>, <code>status</code>, <code>updated</code>. O resto muda conforme o tipo, e o build avisa quando falta algum.</p>
+  </div>
+  <div class="tablewrap"><table>
+  <thead><tr><th>Tipo</th><th>Campos próprios obrigatórios</th><th>Opcionais</th><th>Precisa de card?</th></tr></thead>
+  <tbody><tr>
+  <td><span class="chip" style="--c:var(--t-entend)">Entendimento</span></td>
+  <td><code>card</code></td>
+  <td><code>tags</code>, <code>sprint</code>, <code>related</code></td>
+  <td>Sim</td>
+</tr><tr>
+  <td><span class="chip" style="--c:var(--t-spec)">Spec</span></td>
+  <td><code>card</code></td>
+  <td><code>tags</code>, <code>reviewer</code>, <code>related</code></td>
+  <td>Sim</td>
+</tr><tr>
+  <td><span class="chip" style="--c:var(--t-arq)">Arquitetura</span></td>
+  <td><code>card</code>, <code>components</code></td>
+  <td><code>tags</code>, <code>related</code></td>
+  <td>Sim</td>
+</tr><tr>
+  <td><span class="chip" style="--c:var(--t-bug)">Investigação de bug</span></td>
+  <td><code>card</code>, <code>severity</code></td>
+  <td><code>tags</code>, <code>components</code>, <code>related</code></td>
+  <td>Sim</td>
+</tr><tr>
+  <td><span class="chip" style="--c:var(--t-entrega)">Entrega</span></td>
+  <td><code>card</code>, <code>components</code>, <code>deployed</code></td>
+  <td><code>tags</code>, <code>rollback</code>, <code>related</code></td>
+  <td>Sim</td>
+</tr><tr>
+  <td><span class="chip" style="--c:var(--t-regra)">Regra de negócio</span></td>
+  <td>—</td>
+  <td><code>tags</code>, <code>related</code></td>
+  <td>Não</td>
+</tr></tbody>
+</table></div>
+</section>
+
+<section class="sec">
+  <div class="sec-head">
+    <h2 class="sec-label">Comandos</h2>
+    <p class="sec-lead"><b>Roda copiado para dentro do projeto</b>, sem instalar nada e sem tocar em nenhuma pasta de código. Só devs rodam estes comandos — o resto do time lê o site já pronto.</p>
+  </div>
+  <div class="grid3">
+  <div class="tcard" style="--c:var(--violet-lift)">
+  <div class="tcard-top"><h3>init</h3></div>
+  <p>Cria <code>docs/</code> com as pastas, o <code>DOCUMENTATION-GUIDE.md</code> e um exemplo de cada tipo. Roda uma vez por projeto.</p>
+  <span class="slug">node bin/doczilla.js init</span>
+</div>
+  <div class="tcard" style="--c:var(--green)">
+  <div class="tcard-top"><h3>build</h3></div>
+  <p>Lê tudo, valida o padrão, resolve as ligações e escreve o site em <code>docs/_site/</code>. Abre por duplo clique, offline.</p>
+  <span class="slug">node bin/doczilla.js build</span>
+</div>
+  <div class="tcard" style="--c:var(--t-arq)">
+  <div class="tcard-top"><h3>serve</h3></div>
+  <p>Sobe um servidor local com recarga automática enquanto você escreve. Só para quem está editando.</p>
+  <span class="slug">node bin/doczilla.js serve</span>
+</div>
+</div>
+</section>
+
+<footer class="footnote">
+  <span>Projeto Órion · 19 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

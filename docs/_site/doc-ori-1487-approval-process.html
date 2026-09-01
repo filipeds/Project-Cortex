@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Por que Approval Process nativo e não automação em Apex · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Arquitetura</a><span class="sep">/</span>ORI-1487-approval-process.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-arq)">Arquitetura</span>
+    <a href="card-ori-1487.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1487</span></a>
+    <span class="st ok">decidida</span>
+  </div>
+  <h1>Por que Approval Process nativo e não automação em Apex</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-07-15</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">2 saídas · 2 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#decisao">Decisão</a></li><li><a href="#por-que">Por que</a></li><li><a href="#o-que-foi-descartado">O que foi descartado</a></li><li><a href="#consequencias-que-aceitamos">Consequências que aceitamos</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">arquitetura</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Por que Approval Process nativo e não automação em Apex</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1487</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">decidida</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">opportunity</span>
+  <span class="d">-</span> <span class="v">aprovacao</span>
+  <span class="d">-</span> <span class="v">decisao</span>
+<span class="k">components</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">Opportunity</span>
+  <span class="d">-</span> <span class="v">Desconto__c</span>
+  <span class="d">-</span> <span class="v">DiscountApprovalService</span>
+  <span class="d">-</span> <span class="v">Flow_AlcadaDesconto</span>
+  <span class="d">-</span> <span class="v">Aprovacao_Desconto</span>
+<span class="k">related</span><span class="d">:</span>
+  <span class="d">-</span> <span class="l">ORI-1487-aprovacao-desconto</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-07-15</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="decisao">Decisão</h2>
+<p>A alçada usa o <strong>Approval Process nativo da plataforma</strong>, acionado por uma automação de registro que só dispara quando o desconto muda. O cálculo da faixa fica numa classe de serviço, chamada pela automação.</p>
+<h2 id="por-que">Por que</h2>
+<p>O critério que pesou foi <strong>rastreabilidade sem código</strong>. O Approval Process já entrega histórico de aprovação, delegação, escalonamento por hierarquia e a visualização de etapas dentro do registro — tudo isso é exatamente o que o vendedor pediu quando disse que quer saber &quot;quem está com a minha proposta&quot;.</p>
+<p>Reimplementar isso em Apex significaria escrever e manter um modelo de histórico próprio, que ficaria pior do que o nativo e precisaria de tela nova.</p>
+<p>A faixa fica em Apex, e não dentro do critério de entrada do Approval Process, por um motivo específico: a regra de faixas é compartilhada com outros objetos no futuro (ORI-1531). Deixá-la numa classe de serviço permite reaproveitar sem duplicar percentuais em dois lugares.</p>
+<h2 id="o-que-foi-descartado">O que foi descartado</h2>
+<p><strong>Automação declarativa pura, sem Apex.</strong> Funcionaria para as quatro faixas atuais, mas os percentuais ficariam escritos dentro do critério de entrada. Estender para orçamento exigiria replicar os mesmos números numa segunda automação — e a chance de as duas saírem do ar em momentos diferentes é alta.</p>
+<p><strong>Fluxo de aprovação inteiramente em Apex.</strong> Dá controle total, mas obriga a construir histórico, notificação e tela de aprovação do zero. O custo não se justifica quando o nativo cobre o caso.</p>
+<p><strong>Aprovação por integração com ferramenta externa.</strong> Descartado por adicionar uma dependência de rede a um fluxo que precisa funcionar dentro do CRM, e por tirar o histórico de dentro do registro.</p>
+<h2 id="consequencias-que-aceitamos">Consequências que aceitamos</h2>
+<ul><li>O Approval Process nativo tem limite de etapas por processo. As quatro faixas cabem folgadamente, mas uma quinta faixa exigiria revisitar o desenho.</li><li>O critério de entrada precisa de filtro de mudança real no campo de desconto. Esquecer esse filtro causa aprovação duplicada — foi exatamente o que aconteceu, e está registrado em <a class="wl" href="doc-ori-1487-aprovacao-duplicada.html" style="--c:var(--t-bug)">Aprovação disparava duas vezes ao reabrir a proposta</a>.</li></ul></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 2 entradas</h4>
+  <a class="backlink" href="doc-ori-1487-aprovacao-duplicada.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-bug)">Investigação de bug</span></span>
+  <span class="bn">Aprovação disparava duas vezes ao reabrir a proposta</span>
+  <code class="bp">bugs/ORI-1487-aprovacao-duplicada.md</code>
+</a><a class="backlink" href="doc-ori-1487-aprovacao-desconto.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-spec)">Spec</span></span>
+  <span class="bn">Alçada de aprovação por faixa de desconto</span>
+  <code class="bp">specs/ORI-1487-aprovacao-desconto.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 2 saídas</h4>
+  <ul><li><span class="tick" style="color:var(--t-bug)">&#9656;</span><a href="doc-ori-1487-aprovacao-duplicada.html">Aprovação disparava duas vezes ao reabrir a proposta</a></li><li><span class="tick" style="color:var(--t-spec)">&#9656;</span><a href="doc-ori-1487-aprovacao-desconto.html">Alçada de aprovação por faixa de desconto</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">opportunity</span><span class="st plain">aprovacao</span><span class="st plain">decisao</span></div><h4 style="margin-top:20px">Componentes</h4><ul><li><span class="tick">&#9656;</span><code>Opportunity</code></li><li><span class="tick">&#9656;</span><code>Desconto__c</code></li><li><span class="tick">&#9656;</span><code>DiscountApprovalService</code></li><li><span class="tick">&#9656;</span><code>Flow_AlcadaDesconto</code></li><li><span class="tick">&#9656;</span><code>Aprovacao_Desconto</code></li></ul></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 19 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estender a alçada de desconto para orçamentos · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Entendimentos</a><span class="sep">/</span>ORI-1531-entendimento.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-entend)">Entendimento</span>
+    <a href="card-ori-1531.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1531</span></a>
+    <span class="st warn">backlog</span>
+  </div>
+  <h1>Estender a alçada de desconto para orçamentos</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-08-20</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">1 saída · 2 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#qual-e-a-dor-hoje">Qual é a dor hoje</a></li><li><a href="#o-que-se-espera">O que se espera</a></li><li><a href="#como-saberemos-que-resolveu">Como saberemos que resolveu</a></li><li><a href="#por-que-ainda-nao-foi-feito">Por que ainda não foi feito</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">entendimento</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Estender a alçada de desconto para orçamentos</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1531</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">backlog</span>
+<span class="k">sprint</span><span class="d">:</span> <span class="v">nao priorizado</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">quote</span>
+  <span class="d">-</span> <span class="v">aprovacao</span>
+  <span class="d">-</span> <span class="v">comercial</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-08-20</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="qual-e-a-dor-hoje">Qual é a dor hoje</h2>
+<p>A alçada de aprovação de desconto entregue em <a class="wl" href="doc-ori-1487-aprovacao-desconto.html" style="--c:var(--t-spec)">Alçada de aprovação por faixa de desconto</a> vale apenas para a proposta. O orçamento, que é o documento que o vendedor manda antes de fechar, não passa por aprovação nenhuma.</p>
+<p>Na prática o vendedor consegue enviar um orçamento com 40% de desconto, o cliente ancora a negociação naquele número, e a aprovação só aparece depois — quando já é tarde para negociar de volta.</p>
+<h2 id="o-que-se-espera">O que se espera</h2>
+<p>A mesma alçada aplicada ao orçamento, antes de o documento poder ser enviado ao cliente.</p>
+<h2 id="como-saberemos-que-resolveu">Como saberemos que resolveu</h2>
+<ul><li>Orçamento com desconto fora da alçada do vendedor não pode ser enviado.</li><li>As faixas são exatamente as mesmas da proposta — uma regra só, dois objetos.</li></ul>
+<h2 id="por-que-ainda-nao-foi-feito">Por que ainda não foi feito</h2>
+<p>Levantado durante a implementação de ORI-1487 e deliberadamente deixado fora daquele escopo. Depende de uma decisão comercial ainda pendente sobre quem aprova orçamento de cliente novo.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 2 entradas</h4>
+  <a class="backlink" href="doc-ori-1487-entrega.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-entrega)">Entrega</span></span>
+  <span class="bn">Alçada automática de desconto em produção</span>
+  <code class="bp">entregas/ORI-1487-entrega.md</code>
+</a><a class="backlink" href="doc-ori-1487-aprovacao-desconto.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-spec)">Spec</span></span>
+  <span class="bn">Alçada de aprovação por faixa de desconto</span>
+  <code class="bp">specs/ORI-1487-aprovacao-desconto.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 1 saída</h4>
+  <ul><li><span class="tick" style="color:var(--t-spec)">&#9656;</span><a href="doc-ori-1487-aprovacao-desconto.html">Alçada de aprovação por faixa de desconto</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">quote</span><span class="st plain">aprovacao</span><span class="st plain">comercial</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 19 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

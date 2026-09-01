@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aprovação automática de desconto acima de 15% em Opportunity · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Entendimentos</a><span class="sep">/</span>ORI-1487-entendimento.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-entend)">Entendimento</span>
+    <a href="card-ori-1487.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1487</span></a>
+    <span class="st ok">concluído</span>
+  </div>
+  <h1>Aprovação automática de desconto acima de 15% em Opportunity</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-07-02</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">1 saída · 1 entrada</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#qual-e-a-dor-hoje">Qual é a dor hoje</a></li><li><a href="#o-que-se-espera">O que se espera</a></li><li><a href="#como-saberemos-que-resolveu">Como saberemos que resolveu</a></li><li><a href="#o-que-ja-sabemos-que-nao-muda">O que já sabemos que não muda</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">entendimento</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Aprovação automática de desconto acima de 15% em Opportunity</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1487</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">concluído</span>
+<span class="k">sprint</span><span class="d">:</span> <span class="v">Sprint 34</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">opportunity</span>
+  <span class="d">-</span> <span class="v">aprovacao</span>
+  <span class="d">-</span> <span class="v">comercial</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-07-02</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="qual-e-a-dor-hoje">Qual é a dor hoje</h2>
+<p>Toda proposta com desconto acima de 15% entra numa fila manual revisada pelo gerente comercial. A fila é uma lista de visualização no Salesforce que ninguém monitora por padrão — o gerente abre quando lembra, normalmente no fim do dia.</p>
+<p>O tempo médio entre o vendedor salvar a proposta e receber uma resposta é de <strong>2,8 dias úteis</strong>. Em duas medições feitas no trimestre, 63% das propostas saíram da fila aprovadas sem nenhuma alteração. Ou seja: na maior parte dos casos a fila só adiciona atraso.</p>
+<p>O vendedor, enquanto espera, não tem como saber em que ponto está. A pergunta &quot;cadê minha aprovação?&quot; é o item mais frequente no canal do time comercial.</p>
+<h2 id="o-que-se-espera">O que se espera</h2>
+<p>Que o desconto seja avaliado no momento em que a proposta é salva, e roteado sozinho para quem tem alçada para aprová-lo. Descontos pequenos não deveriam passar por aprovação nenhuma.</p>
+<p>O vendedor precisa enxergar, no próprio registro, em que etapa a aprovação está e quem é o aprovador da vez.</p>
+<h2 id="como-saberemos-que-resolveu">Como saberemos que resolveu</h2>
+<ul><li>Tempo médio de aprovação cai de 2,8 dias para menos de 8 horas úteis.</li><li>Nenhuma proposta com desconto de até 15% gera solicitação de aprovação.</li><li>O vendedor consegue responder &quot;quem está com a minha proposta?&quot; sem abrir chamado nem perguntar no canal.</li></ul>
+<h2 id="o-que-ja-sabemos-que-nao-muda">O que já sabemos que não muda</h2>
+<p>As faixas de alçada em si não estão em discussão neste card — elas já existem e estão descritas em <a class="wl" href="doc-alcada-comercial.html" style="--c:var(--t-regra)">Alçada comercial por faixa de desconto</a>. Este card automatiza a aplicação delas, não redefine os percentuais.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks · 1 entrada</h4>
+  <a class="backlink" href="doc-ori-1487-aprovacao-desconto.html">
+  <span class="bt"><span class="chip" style="--c:var(--t-spec)">Spec</span></span>
+  <span class="bn">Alçada de aprovação por faixa de desconto</span>
+  <code class="bp">specs/ORI-1487-aprovacao-desconto.md</code>
+</a>
+</div>
+    <div class="side">
+  <h4>Aponta para · 1 saída</h4>
+  <ul><li><span class="tick" style="color:var(--t-regra)">&#9656;</span><a href="doc-alcada-comercial.html">Alçada comercial por faixa de desconto</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">opportunity</span><span class="st plain">aprovacao</span><span class="st plain">comercial</span></div></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 19 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Início · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html" aria-current="page">Início</a><a href="cards.html">Cards</a><a href="documentos.html">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<section class="hero">
+  <p class="eyebrow">Projeto Órion · Salesforce Sales Cloud · documentação de 24/08/2026</p>
+  <h1>Tudo que o time escreveu, <em>ligado pelo card</em>.</h1>
+  <p>O Doczilla leu 19 arquivos Markdown dentro de <code>docs/</code>, reconheceu o tipo de cada um pelo frontmatter e reconstruiu as ligações entre eles. Nenhum link foi escrito à mão.</p>
+  <div class="btnrow">
+    <a class="pill" href="cards.html">Explorar por card</a>
+    <a class="arrowbtn solid" href="cards.html" aria-label="Explorar por card">&rarr;</a>
+    <a class="pill-ghost" href="busca.html">Buscar na documentação</a>
+  </div>
+  <div class="figures">
+    <div class="fig"><div class="fig-n">19</div><div class="fig-l">documentos</div></div>
+    <div class="fig"><div class="fig-n">5</div><div class="fig-l">cards mapeados</div></div>
+    <div class="fig"><div class="fig-n">49</div><div class="fig-l">ligações</div></div>
+    <div class="fig"><div class="fig-n g">17</div><div class="fig-l">válidos</div></div>
+    <div class="fig"><div class="fig-n c">4</div><div class="fig-l">com aviso</div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sec-head">
+    <h2 class="sec-label">Tipos de documentação</h2>
+    <p class="sec-lead"><b>Seis tipos, fixos em todo projeto.</b> O campo <code>type</code> no frontmatter define qual é qual, e cada tipo tem seus próprios campos obrigatórios, conferidos no build.</p>
+  </div>
+  <div class="grid3"><a class="tcard" style="--c:var(--t-entend)" href="documentos.html#entendimento">
+  <div class="tcard-top"><h3>Entendimento</h3><span class="cnt">5</span></div>
+  <p>O que o card pede, na linguagem do negócio. Escrito antes de qualquer linha de código.</p>
+  <span class="slug">type: entendimento</span>
+</a><a class="tcard" style="--c:var(--t-spec)" href="documentos.html#spec">
+  <div class="tcard-top"><h3>Spec</h3><span class="cnt">3</span></div>
+  <p>Comportamento esperado, critérios de aceite e casos de borda. É o contrato do que será entregue.</p>
+  <span class="slug">type: spec</span>
+</a><a class="tcard" style="--c:var(--t-arq)" href="documentos.html#arquitetura">
+  <div class="tcard-top"><h3>Arquitetura</h3><span class="cnt">2</span></div>
+  <p>Decisão técnica e o porquê dela. Objetos, automações e integrações tocadas.</p>
+  <span class="slug">type: arquitetura</span>
+</a><a class="tcard" style="--c:var(--t-bug)" href="documentos.html#bug">
+  <div class="tcard-top"><h3>Investigação de bug</h3><span class="cnt">2</span></div>
+  <p>Sintoma, causa raiz e correção. Fica no ar mesmo depois de resolvido: é memória do time.</p>
+  <span class="slug">type: bug</span>
+</a><a class="tcard" style="--c:var(--t-entrega)" href="documentos.html#entrega">
+  <div class="tcard-top"><h3>Entrega</h3><span class="cnt">3</span></div>
+  <p>O que foi de fato desenvolvido, em quais componentes, e como validar em produção.</p>
+  <span class="slug">type: entrega</span>
+</a><a class="tcard" style="--c:var(--t-regra)" href="documentos.html#regra">
+  <div class="tcard-top"><h3>Regra de negócio</h3><span class="cnt">4</span></div>
+  <p>Regra que atravessa vários cards. Não pertence a nenhum: é referenciada por todos.</p>
+  <span class="slug">type: regra</span>
+</a></div>
+</section>
+
+<section class="sec">
+  <div class="sec-head">
+    <h2 class="sec-label">Cards recentes</h2>
+    <p class="sec-lead"><b>O card é o eixo.</b> Os quadradinhos mostram quais tipos de documento já existem para cada card, e quais ainda faltam.</p>
+  </div>
+  <div class="grid3"><a class="ccard" href="card-ori-1531.html">
+  <span class="ccard-id">ORI-1531</span>
+  <h3>Estender a alçada de desconto para orçamentos</h3>
+  <div class="dotline"><span class="dot" style="--c:var(--t-entend)" title="Entendimento"></span><span class="dot off" title="Spec: ausente"></span><span class="dot off" title="Arquitetura: ausente"></span><span class="dot off" title="Investigação de bug: ausente"></span><span class="dot off" title="Entrega: ausente"></span></div>
+  <div class="ccard-foot">
+    <span>1 documento</span>
+    <span class="st warn">backlog</span>
+  </div>
+</a><a class="ccard" href="card-ori-1487.html">
+  <span class="ccard-id">ORI-1487</span>
+  <h3>Aprovação automática de desconto acima de 15% em Opportunity</h3>
+  <div class="dotline"><span class="dot" style="--c:var(--t-entend)" title="Entendimento"></span><span class="dot" style="--c:var(--t-spec)" title="Spec"></span><span class="dot" style="--c:var(--t-arq)" title="Arquitetura"></span><span class="dot" style="--c:var(--t-bug)" title="Investigação de bug"></span><span class="dot" style="--c:var(--t-entrega)" title="Entrega"></span></div>
+  <div class="ccard-foot">
+    <span>5 documentos</span>
+    <span class="st ok">em produção</span>
+  </div>
+</a><a class="ccard" href="card-ori-1502.html">
+  <span class="ccard-id">ORI-1502</span>
+  <h3>Chamados duplicados quando o cliente responde com anexo</h3>
+  <div class="dotline"><span class="dot" style="--c:var(--t-entend)" title="Entendimento"></span><span class="dot off" title="Spec: ausente"></span><span class="dot off" title="Arquitetura: ausente"></span><span class="dot off" title="Investigação de bug: ausente"></span><span class="dot off" title="Entrega: ausente"></span></div>
+  <div class="ccard-foot">
+    <span>1 documento</span>
+    <span class="st warn">em análise</span>
+  </div>
+</a><a class="ccard" href="card-ori-1466.html">
+  <span class="ccard-id">ORI-1466</span>
+  <h3>Status de pedido do ERP visível dentro do Salesforce</h3>
+  <div class="dotline"><span class="dot" style="--c:var(--t-entend)" title="Entendimento"></span><span class="dot" style="--c:var(--t-spec)" title="Spec"></span><span class="dot" style="--c:var(--t-arq)" title="Arquitetura"></span><span class="dot off" title="Investigação de bug: ausente"></span><span class="dot" style="--c:var(--t-entrega)" title="Entrega"></span></div>
+  <div class="ccard-foot">
+    <span>4 documentos</span>
+    <span class="st ok">em produção</span>
+  </div>
+</a><a class="ccard" href="card-ori-1291.html">
+  <span class="ccard-id">ORI-1291</span>
+  <h3>Preço não pode mudar depois que a proposta foi assinada</h3>
+  <div class="dotline"><span class="dot" style="--c:var(--t-entend)" title="Entendimento"></span><span class="dot" style="--c:var(--t-spec)" title="Spec"></span><span class="dot off" title="Arquitetura: ausente"></span><span class="dot off" title="Investigação de bug: ausente"></span><span class="dot" style="--c:var(--t-entrega)" title="Entrega"></span></div>
+  <div class="ccard-foot">
+    <span>3 documentos</span>
+    <span class="st ok">em produção</span>
+  </div>
+</a></div>
+</section>
+
+<section class="sec">
+  <div class="sec-head">
+    <h2 class="sec-label">Saúde da documentação</h2>
+    <p class="sec-lead"><b>O build valida o padrão e não falha por isso.</b> Ele avisa, gera a wiki mesmo assim e marca o que precisa de atenção, para que ninguém fique sem site por causa de um campo esquecido.</p>
+  </div>
+  <div class="hlist"><div class="hrow">
+  <span class="st crit">ligacao</span>
+  <span class="msg">Wikilink quebrado: <b>[[politica-margem-minima]]</b> não corresponde a nenhum documento.</span>
+  <code>specs/ORI-1487-aprovacao-desconto.md</code>
+</div><div class="hrow">
+  <span class="st warn">frontmatter</span>
+  <span class="msg">Campo <b>card</b> ausente. O documento não vai aparecer em nenhuma página de card.</span>
+  <code>bugs/duplicidade-case-anexo.md</code>
+</div><div class="hrow">
+  <span class="st warn">cobertura</span>
+  <span class="msg"><b>ORI-1531 está sem spec.</b> Existe Entendimento, mas nada define o comportamento esperado.</span>
+  <code>card ORI-1531</code>
+</div><div class="hrow">
+  <span class="st warn">cobertura</span>
+  <span class="msg"><b>ORI-1502 está sem spec.</b> Existe Entendimento, mas nada define o comportamento esperado.</span>
+  <code>card ORI-1502</code>
+</div></div>
+</section>
+
+<footer class="footnote">
+  <span>Projeto Órion · 19 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>

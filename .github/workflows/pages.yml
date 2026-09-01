@@ -1,0 +1,40 @@
+name: Publicar exemplo no GitHub Pages
+
+on:
+  push:
+    branches: [feat/estrutura-do-sistema]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Preparar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Conferir que docs/_site/ está em dia
+        run: node bin/doczilla.js build --verificar
+
+      - name: Upload do artefato (docs/_site)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/_site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

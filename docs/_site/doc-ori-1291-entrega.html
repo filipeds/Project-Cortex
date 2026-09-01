@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Congelamento de preço em proposta assinada · Projeto Órion</title>
+<meta name="description" content="Documentação do projeto Projeto Órion, gerada pelo Doczilla a partir da pasta docs/.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235728FF'/%3E%3Crect x='9' y='9' width='14' height='14' rx='4' fill='%231CE65D'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">Doczilla</span>
+    <span class="brand-div"></span>
+    <span class="brand-sub">Projeto Órion</span>
+  </a>
+  <nav class="nav" aria-label="Seções da wiki"><a href="index.html">Início</a><a href="cards.html">Cards</a><a href="documentos.html" aria-current="page">Documentos</a><a href="busca.html">Busca</a><a href="grafo.html">Grafo</a><a href="padrao.html">Padrão</a></nav>
+  <button class="themer" id="themer" title="Alternar tema claro e escuro" aria-label="Alternar tema claro e escuro">&#9686;</button>
+</header>
+<div class="wrap">
+
+<nav class="crumb" aria-label="Trilha"><a href="index.html">Projeto Órion</a><span class="sep">/</span><a href="documentos.html">Entregas</a><span class="sep">/</span>ORI-1291-entrega.md</nav>
+
+<header class="pagehead">
+  <div class="metarow">
+    <span class="chip" style="--c:var(--t-entrega)">Entrega</span>
+    <a href="card-ori-1291.html"><span class="chip" style="--c:var(--violet-lift)">ORI-1291</span></a>
+    <span class="st ok">em produção</span>
+  </div>
+  <h1>Congelamento de preço em proposta assinada</h1>
+  <div class="metarow kv"><div class="meta-kv">
+      <span class="meta-k">Atualizado</span>
+      <span class="meta-v">2026-05-21</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Implantado</span>
+      <span class="meta-v">2026-05-21</span>
+    </div><div class="meta-kv">
+      <span class="meta-k">Ligações</span>
+      <span class="meta-v">1 saída · 0 entradas</span>
+    </div></div>
+</header>
+
+<div class="split doc">
+  <aside class="toc">
+  <h4>Nesta página</h4>
+  <ol><li><a href="#o-que-foi-entregue">O que foi entregue</a></li><li><a href="#como-validar-em-producao">Como validar em produção</a></li><li><a href="#como-reverter">Como reverter</a></li><li><a href="#consequencia-para-o-projeto">Consequência para o projeto</a></li></ol>
+</aside>
+  <article>
+    <div class="fm"><span class="d">---</span>
+<span class="k">type</span><span class="d">:</span> <span class="v">entrega</span>
+<span class="k">title</span><span class="d">:</span> <span class="v">Congelamento de preço em proposta assinada</span>
+<span class="k">card</span><span class="d">:</span> <span class="v">ORI-1291</span>
+<span class="k">status</span><span class="d">:</span> <span class="v">em produção</span>
+<span class="k">deployed</span><span class="d">:</span> <span class="v">2026-05-21</span>
+<span class="k">tags</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">opportunity</span>
+  <span class="d">-</span> <span class="v">preco</span>
+  <span class="d">-</span> <span class="v">contrato</span>
+<span class="k">components</span><span class="d">:</span>
+  <span class="d">-</span> <span class="v">Opportunity</span>
+  <span class="d">-</span> <span class="v">Assinada__c</span>
+  <span class="d">-</span> <span class="v">PrecoCongeladoValidation</span>
+  <span class="d">-</span> <span class="v">Flow_ReversaoNegociacao</span>
+<span class="k">related</span><span class="d">:</span>
+  <span class="d">-</span> <span class="l">congelamento-preco</span>
+<span class="k">updated</span><span class="d">:</span> <span class="v">2026-05-21</span>
+<span class="k">rollback</span><span class="d">:</span> <span class="v">desativar a regra de validação PrecoCongeladoValidation</span>
+<span class="d">---</span></div>
+    <div class="prose"><h2 id="o-que-foi-entregue">O que foi entregue</h2>
+<ul><li><strong>Regra de validação <code>PrecoCongeladoValidation</code></strong>, que bloqueia alteração de valor e desconto quando a proposta está assinada. Vale para edição manual, carga em massa e automação — foi por essa última que o problema original entrou.</li><li><strong><code>Flow_ReversaoNegociacao</code></strong>, o caminho explícito de exceção: reverte a proposta para negociação registrando autor e data.</li><li>Campo indicando se a proposta está assinada, com a data da assinatura.</li></ul>
+<h2 id="como-validar-em-producao">Como validar em produção</h2>
+<ol><li>Marcar uma proposta de teste como assinada.</li><li>Tentar alterar o valor. <strong>Esperado:</strong> bloqueio com mensagem explicando o motivo e apontando o caminho de reversão.</li><li>Rodar uma atualização em massa que inclua essa proposta. <strong>Esperado:</strong> os demais registros são atualizados e este é ignorado, aparecendo no resultado da operação — não pode falhar em silêncio.</li><li>Reverter para negociação. <strong>Esperado:</strong> campos voltam a ser editáveis e a reversão fica registrada.</li><li>Conferir que proposta não assinada continua totalmente editável.</li></ol>
+<h2 id="como-reverter">Como reverter</h2>
+<p>Desativar a regra de validação. O campo de assinatura e o fluxo de reversão podem permanecer sem efeito colateral.</p>
+<h2 id="consequencia-para-o-projeto">Consequência para o projeto</h2>
+<p>Esta entrega deu origem à regra <a class="wl" href="doc-congelamento-preco.html" style="--c:var(--t-regra)">Congelamento de preço após assinatura</a>, que passou a valer para todo o projeto e é referenciada por outros cards.</p></div>
+  </article>
+  <aside>
+    <div class="side">
+  <h4>Backlinks</h4>
+  <p style="margin:0; font-size:14px; color:var(--text-mute)">Nenhum documento aponta para este ainda.</p>
+</div>
+    <div class="side">
+  <h4>Aponta para · 1 saída</h4>
+  <ul><li><span class="tick" style="color:var(--t-regra)">&#9656;</span><a href="doc-congelamento-preco.html">Congelamento de preço após assinatura</a></li></ul>
+</div>
+    <div class="side"><h4>Tags</h4><div class="metarow"><span class="st plain">opportunity</span><span class="st plain">preco</span><span class="st plain">contrato</span></div><h4 style="margin-top:20px">Componentes</h4><ul><li><span class="tick">&#9656;</span><code>Opportunity</code></li><li><span class="tick">&#9656;</span><code>Assinada__c</code></li><li><span class="tick">&#9656;</span><code>PrecoCongeladoValidation</code></li><li><span class="tick">&#9656;</span><code>Flow_ReversaoNegociacao</code></li></ul></div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  <span>Projeto Órion · 19 documentos · documentação de 24/08/2026</span>
+  <span>Gerado pelo Doczilla a partir de <code>docs/</code></span>
+</footer>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>
