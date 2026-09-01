@@ -12,8 +12,9 @@ arquivos de metadados: o Doczilla olha apenas para `docs/` e nunca toca no resto
 ## Comece aqui
 
 Não há pacote publicado: o Doczilla se instala copiando o código para dentro
-do repositório onde vai ser usado. Só devs rodam os comandos abaixo — o resto
-do time só lê o site gerado.
+do repositório onde vai ser usado (ver [Segurança e uso em repositório
+corporativo](#segurança-e-uso-em-repositório-corporativo)). Só devs rodam os
+comandos abaixo — o resto do time só lê o site gerado.
 
 ```bash
 node bin/doczilla.js init     # cria docs/ com o padrão e um exemplo de cada tipo
@@ -157,6 +158,16 @@ Opcional. Um `doczilla.config.json` na raiz muda apenas cosmética e caminhos:
 Os tipos e seus campos obrigatórios **não** são configuráveis. É de propósito:
 sem isso, cada projeto vira um dialeto e a instrução dada à IA deixa de valer
 em todos eles.
+
+## Segurança e uso em repositório corporativo
+
+Zero dependências de runtime, nenhum acesso à rede, nenhuma execução de código
+vindo de documento, e leitura restrita às pastas declaradas.
+
+[`SEGURANCA.md`](SEGURANCA.md) traz a auditoria completa — o que foi encontrado
+e corrigido, os riscos residuais, e a única forma de instalar usada aqui:
+copiar o código para dentro do repositório, sem registro de pacotes e sem
+dependência de git.
 
 ## Desenvolvimento
 
