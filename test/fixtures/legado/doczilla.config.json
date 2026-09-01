@@ -1,0 +1,15 @@
+{
+  "nome": "Plataforma Vela",
+  "saida": "_site",
+  "perfil": {
+    "versao": 1,
+    "raizes": [
+      { "caminho": ".", "rotulo": "Raiz do projeto", "profundidade": 1 },
+      { "caminho": "docs", "rotulo": "Documentação" },
+      { "caminho": "adr", "rotulo": "Decisões", "tipoPadrao": "arquitetura" }
+    ],
+    "eixo": { "modo": "pasta", "rotulo": "Pasta", "rotuloPlural": "Pastas" },
+    "ligacoes": { "relativos": true, "campos": ["parent"] },
+    "ignorar": []
+  }
+}
