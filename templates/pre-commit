@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# Doczilla — mantém a wiki versionada em dia com os documentos.
+#
+# Sem isto, o modo de falha é previsível: alguém edita um .md, esquece de rodar
+# o build, e a main passa a ter documentação nova com wiki velha. Nada quebra,
+# ninguém percebe, e quem lê o site recebe informação errada com cara de certa.
+#
+# Instalação, uma vez por clone:
+#
+#   git config core.hooksPath ferramentas/hooks
+#
+# (copie este arquivo para ferramentas/hooks/pre-commit e dê permissão de
+# execução: chmod +x ferramentas/hooks/pre-commit)
+#
+# Ajuste as duas linhas abaixo se os caminhos do seu projeto forem outros.
+
+DOCZILLA="ferramentas/doczilla/bin/doczilla.js"
+SAIDA="docs/_site"
+
+# Não faz nada quando o commit não toca documentação nem configuração.
+ALTERADOS=$(git diff --cached --name-only --diff-filter=ACMRD)
+if ! printf '%s\n' "$ALTERADOS" | grep -qE '\.md$|doczilla\.config\.json$'; then
+  exit 0
+fi
+
+if [ ! -f "$DOCZILLA" ]; then
+  echo "  doczilla não encontrado em $DOCZILLA — pulando a geração da wiki." >&2
+  exit 0
+fi
+
+# Se a saída já está em dia, não há o que fazer: evita reescrever arquivo à toa
+# quando o commit mexe só em .md fora das raízes de documentação.
+if node "$DOCZILLA" build --verificar --quiet 2>/dev/null; then
+  exit 0
+fi
+
+echo "  doczilla: regerando $SAIDA/ para acompanhar os documentos deste commit"
+
+if ! node "$DOCZILLA" build --quiet; then
+  echo "  doczilla: o build falhou. Corrija o erro acima e refaça o commit." >&2
+  exit 1
+fi
+
+git add "$SAIDA"
+echo "  doczilla: $SAIDA/ atualizado e incluído no commit"

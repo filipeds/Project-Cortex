@@ -1,0 +1,32 @@
+{
+  "name": "doczilla",
+  "version": "0.1.0",
+  "description": "Gera uma wiki estatica e offline a partir da pasta docs/ de um projeto.",
+  "type": "module",
+  "bin": {
+    "doczilla": "./bin/doczilla.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node bin/doczilla.js build",
+    "serve": "node bin/doczilla.js serve",
+    "init": "node bin/doczilla.js init",
+    "analisar": "node bin/doczilla.js analisar",
+    "test": "node --test \"test/**/*.test.js\""
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates"
+  ],
+  "keywords": [
+    "documentacao",
+    "wiki",
+    "markdown",
+    "salesforce",
+    "static-site"
+  ],
+  "license": "MIT"
+}
