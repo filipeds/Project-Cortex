@@ -70,3 +70,28 @@ test('rodape volta ao carimbo quando o historico nao esta disponivel', () => {
   assert.match(html, /documentação de 02\/09\/2026/);
   assert.doesNotMatch(html, /última atualização por/);
 });
+
+test('renderHistorico respeita limite de 40 entradas e mostra overflow', () => {
+  // Generate 45 placeholder entries
+  const entradas = Array.from({ length: 45 }, (_, i) => ({
+    autor: `Autor ${i}`,
+    data: '2026-09-02',
+    acao: 'editou',
+    href: `doc-${i}.html`,
+    title: `Documento ${i}`,
+    relPath: `docs/doc-${i}.md`,
+  }));
+
+  const historico = { disponivel: true, entradas };
+  const html = renderHistorico({ grafo: { docs: [] }, projeto: projetoBase(historico) });
+
+  // Assert that the first 40 entries appear
+  assert.match(html, /Documento 0/);
+  assert.match(html, /Documento 39/);
+
+  // Assert that the 41st entry does NOT appear as a linked entry (but might appear in overflow message)
+  assert.doesNotMatch(html, /<a href="doc-40\.html">Documento 40<\/a>/);
+
+  // Assert that the overflow line appears with correct count (45 - 40 = 5)
+  assert.match(html, /5 entradas não listadas aqui/);
+});

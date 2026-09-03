@@ -68,7 +68,7 @@ ${livereload ? '<script src="livereload.js"></script>' : ''}
 function rodape(projeto) {
   const ultima = projeto.historico?.disponivel ? projeto.historico.ultimaAlteracao : null;
   const linhaData = ultima
-    ? ` · última atualização por ${escapeHtml(ultima.autor)} em ${dataCurta(ultima.data)}`
+    ? ` · última atualização por ${escapeHtml(ultima.autor)} em ${escapeHtml(dataCurta(ultima.data))}`
     : (projeto.build ? ` · ${escapeHtml(projeto.build)}` : '');
   return `<footer class="footnote">
   <span>${escapeHtml(projeto.nome)} · ${projeto.totalDocs} documentos${linhaData}</span>
