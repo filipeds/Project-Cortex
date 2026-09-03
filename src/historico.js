@@ -77,7 +77,13 @@ export function casarComGrafo(historicoGit, grafo) {
     })
     .filter(Boolean);
 
-  return { disponivel: true, ultimaAlteracao: historicoGit.ultimaAlteracao, entradas };
+  // A ultima alteracao sai do `entradas` ja casado (mais novo primeiro), nunca
+  // do commit bruto: commit que so regenera `docs/_site/` nao pode mover o alvo.
+  const ultimaAlteracao = entradas.length
+    ? { autor: entradas[0].autor, data: entradas[0].data }
+    : null;
+
+  return { disponivel: true, ultimaAlteracao, entradas };
 }
 
 /**
@@ -89,7 +95,7 @@ export async function obterHistoricoGit({ raiz, raizes }) {
   try {
     const { stdout: topBruto } = await execFileAsync(
       'git',
-      ['rev-parse', '--show-toplevel'],
+      ['-c', 'core.quotepath=false', 'rev-parse', '--show-toplevel'],
       { cwd: raiz },
     );
     const toplevel = topBruto.trim();
@@ -97,8 +103,11 @@ export async function obterHistoricoGit({ raiz, raizes }) {
     const caminhos = raizes.map((r) => r.abs);
     const { stdout: saida } = await execFileAsync(
       'git',
-      ['log', '--name-status', '--date=short', '--pretty=format:@@%H|%an|%ad', '--', ...caminhos],
-      { cwd: raiz },
+      // `--max-count` limita a saida (so 40 entradas sao exibidas) e `maxBuffer`
+      // cobre o pior caso: o padrao de 1 MiB estoura em repositorio grande e a
+      // falha viraria um `disponivel: false` silencioso.
+      ['-c', 'core.quotepath=false', 'log', '--name-status', '--date=short', '--max-count=500', '--pretty=format:@@%H|%an|%ad', '--', ...caminhos],
+      { cwd: raiz, maxBuffer: 20 * 1024 * 1024 },
     );
 
     const { ultimaAlteracao, entradas } = parseLogGit(saida, toplevel);

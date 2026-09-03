@@ -65,6 +65,46 @@ test('casarComGrafo linka entradas a docs existentes e descarta o resto', () => 
   ]);
 });
 
+test('casarComGrafo deriva ultimaAlteracao do commit mais recente que bate com um doc existente, ignorando commits nao-relacionados (ex.: regeneracao de docs/_site)', () => {
+  const grafo = {
+    docs: [
+      { absPath: 'C:/repo/docs/regras/exemplo.md', href: 'doc-exemplo.html', title: 'Exemplo', relPath: 'regras/exemplo.md' },
+    ],
+  };
+  const historicoGit = {
+    disponivel: true,
+    // Commit mais novo do log bruto, mas so tocou a saida gerada.
+    ultimaAlteracao: { autor: 'Bot de build', data: '2026-09-03' },
+    entradas: [
+      { autor: 'Bot de build', data: '2026-09-03', acao: 'editou', absPath: 'C:/repo/docs/_site/index.html' },
+      { autor: 'Maria', data: '2026-09-01', acao: 'editou', absPath: 'C:/repo/docs/regras/exemplo.md' },
+    ],
+  };
+
+  const resultado = casarComGrafo(historicoGit, grafo);
+
+  assert.deepEqual(resultado.ultimaAlteracao, { autor: 'Maria', data: '2026-09-01' });
+  assert.deepEqual(resultado.entradas, [
+    { autor: 'Maria', data: '2026-09-01', acao: 'editou', href: 'doc-exemplo.html', title: 'Exemplo', relPath: 'regras/exemplo.md' },
+  ]);
+});
+
+test('casarComGrafo devolve ultimaAlteracao nula quando nenhuma entrada bate com o grafo', () => {
+  const historicoGit = {
+    disponivel: true,
+    ultimaAlteracao: { autor: 'Bot de build', data: '2026-09-03' },
+    entradas: [
+      { autor: 'Bot de build', data: '2026-09-03', acao: 'editou', absPath: 'C:/repo/docs/_site/index.html' },
+    ],
+  };
+
+  const resultado = casarComGrafo(historicoGit, { docs: [] });
+
+  assert.equal(resultado.disponivel, true);
+  assert.equal(resultado.ultimaAlteracao, null);
+  assert.deepEqual(resultado.entradas, []);
+});
+
 test('casarComGrafo propaga indisponibilidade sem tocar no grafo', () => {
   const resultado = casarComGrafo({ disponivel: false, ultimaAlteracao: null, entradas: [] }, { docs: [] });
   assert.deepEqual(resultado, { disponivel: false, ultimaAlteracao: null, entradas: [] });

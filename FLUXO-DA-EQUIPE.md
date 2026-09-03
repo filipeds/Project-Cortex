@@ -30,10 +30,16 @@ seguro em vez de "confiar que ninguém esquece":
 
 **O build é determinístico.** Rodar duas vezes sem mudar documento produz
 arquivos idênticos — nada de carimbo de horário mudando à toa. Isso significa
-que o diff do PR mostra exatamente as páginas afetadas pela edição, nunca o
-site inteiro. Editar uma spec muda a página dela e a busca; o resto do site nem
-entra no commit — na demonstração deste repositório (19 documentos), editar um
-documento muda 2 dos 32 arquivos gerados.
+que o diff do PR nunca é o site inteiro: editar uma spec muda a página dela e o
+índice de busca, e o conteúdo do resto do site nem entra no commit.
+
+Desde a página de Histórico, porém, o rodapé de toda página traz "última
+atualização por Fulano em DD/MM", vindo do `git log`. Rodapé e navegação são o
+mesmo template, então **quando essa última alteração muda, todas as páginas são
+reescritas** — e isso acontece a cada commit que toca um documento ainda
+existente, mesmo sem editar o texto de nenhum `.md`. O diff deixou de ser
+sempre minúsculo; continua sendo, no pior caso, só a moldura compartilhada,
+nunca o conteúdo do site.
 
 **Um hook garante que ninguém esqueça.** `templates/pre-commit` roda
 `doczilla build --verificar` antes de cada commit: se algum `.md` mudou e o
