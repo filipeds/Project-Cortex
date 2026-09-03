@@ -172,6 +172,13 @@ O site precisa abrir por duplo clique, em `file://`, sem rede:
   adicionar qualquer coisa nova ao HTML gerado (contador, id aleatório, hora do
   build), pare e pergunte se aquilo pode variar entre duas rodadas do mesmo
   conteúdo.
+- **O git é o segundo insumo do build.** `src/historico.js` lê o `git log` da
+  `docs/`, e ele é determinístico do seu jeito: mesmo HEAD, mesma saída; sem
+  git, degrada para `disponivel: false` e o site sai igual, só sem autoria.
+  `casarComGrafo()` deriva `ultimaAlteracao` do `entradas` já casado com o
+  grafo — nunca da resposta crua do git — porque `docs/_site/` mora dentro de
+  `docs/`, e commit que só regenera a saída moveria o alvo do próprio
+  `--verificar` a cada rodada. Não volte a passar o commit bruto adiante.
 - **Nunca escreva `npx doczilla` em texto gerado ou impresso.** Não existe
   pacote publicado — a ferramenta se instala copiando o código para dentro do
   projeto. Toda mensagem que sugere um comando (CLI e páginas geradas) usa

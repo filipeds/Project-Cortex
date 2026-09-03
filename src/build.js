@@ -4,11 +4,13 @@ import { carregarConfig } from './config.js';
 import { carregarDocumentos } from './load.js';
 import { montarGrafo } from './graph.js';
 import { validar, resumoAvisos, docsValidos, progressoAdocao } from './validate.js';
+import { obterHistoricoGit, casarComGrafo } from './historico.js';
 import { CSS } from './render/styles.js';
 import { APP_JS, LIVERELOAD_JS } from './render/app-js.js';
 import { renderHome, renderListaCards, renderListaDocumentos } from './render/pages-home.js';
 import { renderCard, renderDocumento } from './render/pages-doc.js';
 import { renderBusca, renderGrafo, renderPadrao, renderMapa } from './render/pages-extra.js';
+import { renderHistorico } from './render/pages-historico.js';
 
 /**
  * Le docs/, monta o grafo, valida e escreve o site em docs/_site/.
@@ -17,7 +19,7 @@ import { renderBusca, renderGrafo, renderPadrao, renderMapa } from './render/pag
  */
 export async function build({
   raiz = process.cwd(), livereload = false, carimboTexto = '', escrever = true,
-  invocacao = 'node bin/doczilla.js',
+  invocacao = 'node bin/doczilla.js', obterHistorico = obterHistoricoGit,
 } = {}) {
   const inicio = Date.now();
   const config = await carregarConfig(raiz);
@@ -33,6 +35,14 @@ export async function build({
     ligacoes: config.ligacoes,
     regime: config.regime,
   });
+  let historico;
+  try {
+    const historicoGit = await obterHistorico({ raiz, raizes: config.raizes });
+    historico = casarComGrafo(historicoGit, grafo);
+  } catch {
+    historico = { disponivel: false, ultimaAlteracao: null, entradas: [] };
+  }
+
   const avisos = validar(grafo, { regime: config.regime });
   const resumo = resumoAvisos(avisos);
   const validos = docsValidos(grafo, avisos);
@@ -48,6 +58,7 @@ export async function build({
     totalDocs: docs.length,
     build: carimbo(docs, { relogio: livereload, texto: carimboTexto }),
     livereload,
+    historico,
     // Como este build foi de fato invocado, para os comandos que a wiki
     // sugere (no cartão do "build", no aviso de excesso) serem copiáveis de
     // verdade — não existe pacote publicado, então nunca "npx doczilla".
@@ -60,6 +71,7 @@ export async function build({
   paginas.set('documentos.html', renderListaDocumentos({ grafo, projeto }));
   paginas.set('busca.html', renderBusca({ grafo, projeto }));
   paginas.set('grafo.html', renderGrafo({ grafo, projeto }));
+  paginas.set('historico.html', renderHistorico({ grafo, projeto }));
   paginas.set('padrao.html', renderPadrao({ grafo, projeto }));
   // O mapa so existe onde houve pre-leitura: num projeto que nasceu com o
   // padrao, nao ha organizacao a descobrir, e a pagina Padrao ja conta tudo.
