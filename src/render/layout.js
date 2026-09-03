@@ -8,6 +8,7 @@ export const PAGINAS = [
   { href: 'busca.html', rotulo: 'Busca', chave: 'busca' },
   { href: 'grafo.html', rotulo: 'Grafo', chave: 'grafo' },
   { href: 'padrao.html', rotulo: 'Padrão', chave: 'padrao' },
+  { href: 'historico.html', rotulo: 'Histórico', chave: 'historico' },
 ];
 
 /**
@@ -65,8 +66,12 @@ ${livereload ? '<script src="livereload.js"></script>' : ''}
 }
 
 function rodape(projeto) {
+  const ultima = projeto.historico?.disponivel ? projeto.historico.ultimaAlteracao : null;
+  const linhaData = ultima
+    ? ` · última atualização por ${escapeHtml(ultima.autor)} em ${dataCurta(ultima.data)}`
+    : (projeto.build ? ` · ${escapeHtml(projeto.build)}` : '');
   return `<footer class="footnote">
-  <span>${escapeHtml(projeto.nome)} · ${projeto.totalDocs} documentos${projeto.build ? ` · ${escapeHtml(projeto.build)}` : ''}</span>
+  <span>${escapeHtml(projeto.nome)} · ${projeto.totalDocs} documentos${linhaData}</span>
   <span>Gerado pelo Doczilla a partir de ${listaDeRaizes(projeto)}</span>
 </footer>`;
 }
@@ -78,6 +83,14 @@ export function listaDeRaizes(projeto, limite = 3) {
   const mostradas = raizes.slice(0, limite).map((r) => `<code>${escapeHtml(r)}/</code>`).join(', ');
   const resto = raizes.length > limite ? ` e mais ${raizes.length - limite}` : '';
   return `${mostradas}${resto}`;
+}
+
+/** "2026-09-02" (formato --date=short do git) vira "02/09" para leitura rapida. */
+export function dataCurta(iso) {
+  const partes = String(iso).split('-');
+  if (partes.length !== 3) return iso;
+  const [, mes, dia] = partes;
+  return `${dia}/${mes}`;
 }
 
 /* ----------------------------------------------------------------
